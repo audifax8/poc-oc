@@ -2,15 +2,14 @@ import React from 'react';
 import { useEffect, createContext, useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoaded } from '../store/core';
-//import { ConfigureService } from '../services/configure-core';
+import { CoreService } from '../services/core';
 import { setProduct } from '../store/product';
-//import { IConfigureService } from '../interfaces';
 import { useSearchParams } from 'react-router-dom';
 import { setParams } from '../store/params';
 import { setCASToRender } from '../store/ui';
-import { IState } from '../interfaces';
+import { IState, ICoreService, IProviderProps } from '../interfaces';
 
-//const createCore = require('@cfg.plat/configure-core');
+const createCore = require('@cfg.plat/configure-core');
 
 const CoreContext = createContext({});
 
@@ -18,7 +17,7 @@ export function useConfigure(): any {
   return useContext(CoreContext);
 }
 
-export function CoreProvider(props: any) {
+export function CoreProvider(props: IProviderProps) {
   const dispatch = useDispatch();
   const params = useSelector((state: IState) => state?.params);
   const [queryParameters] = useSearchParams();
@@ -37,7 +36,7 @@ export function CoreProvider(props: any) {
   };
 
   const { children } = props;
-  const [configureCoreService, setConfigureCoreService] = useState();
+  const [configureCoreService, setConfigureCoreService] = useState<ICoreService>();
   useEffect(() => {
     const { workflow, product, customer, locale } = mergedParams;
     const graphUrl =
@@ -63,9 +62,8 @@ export function CoreProvider(props: any) {
         const productGraph = await productGraphResponse.json();
         const preferences = await preferencesResponse.json();
         const uiSettings = await uiSettingsResponse.json();
-        console.log({preferences, productGraph, mergedParams, uiSettings});
 
-        /*createCore(
+        createCore(
           {
             productGraph,
             preferences,
@@ -76,16 +74,16 @@ export function CoreProvider(props: any) {
               console.error(error);
               return;
             }
-            const _cService = new ConfigureService(configureCore);
+            const _cService = new CoreService(configureCore);
             const product = _cService.getProduct();
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
-            dispatch(setparams(mergedParams));
+            dispatch(setParams(mergedParams));
             const casToRender = _cService.mapCas();
             dispatch(setCASToRender(casToRender));
             setConfigureCoreService(_cService);
           }
-        );*/
+        );
       }
     })
     .catch((err) => {
