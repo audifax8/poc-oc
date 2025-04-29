@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-//import { RBN_CUSTOMER_ID, WAYFARER_ID } from '../constants';
-
-export const MEGA_WAYFARER_ID = 26101;
-export const RBN_CUSTOMER_ID = 1581;
-export const WAYFARER_ID = 22972;
+import { RBN_CUSTOMER_ID, WAYFARER_ID } from '../constants/rbn';
 
 export const paramsSlice = createSlice({
   name: 'params',
@@ -21,7 +17,8 @@ export const paramsSlice = createSlice({
     customerId: RBN_CUSTOMER_ID,
     workflow: 'prod',
     apiKey: 'LUX-Ray-Ban-8taOhSR5AFyjt9tfxU',
-    locale: 'en_US'
+    locale: 'en_US',
+    brand: 'rbn'
   },
   reducers: {
     setParams: (state, action) => {

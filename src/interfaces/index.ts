@@ -25,6 +25,7 @@ export interface IParams {
   workflow: string;
   apiKey: string;
   locale: string;
+  brand: string;
 };
 export interface ICore {
   loaded: boolean;
@@ -122,12 +123,18 @@ export interface IAttributeValue {
 export interface ICoreService {
   getProduct(): any;
   getProductName(): string;
-  getToken(): string;
   getRecipe(format: string, option1?: string, option2?: string): any;
   getAttribute(options: any): IConfigurableAttribute;
-  mapCas(): ICAMap[];
+  getAttributeByAlias(alias: string): IConfigurableAttribute;
+  getSelectedAV(alias: string): IAttributeValue;
 };
 
 export interface IProviderProps {
   children: ReactNode;
 };
+
+export interface ILuxBase {
+  getToken(): string;
+  decodeToken(): any[];
+  mapCas():  ICAMap[];
+}
