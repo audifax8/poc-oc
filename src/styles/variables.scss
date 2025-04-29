@@ -1,0 +1,57 @@
+// Colors
+$white:         #fff;
+$black:         #000;
+$black-1f:      #1f1f24;
+$black-22:      #222222;
+$black-33:      #333333;
+$black-55:      #555555;
+$grey-1d:       #1d1d1d;
+$grey-f2:       #f2f2f2;
+$grey-f6:       #f6f6f6;
+$grey-d4:       #d4d4d4;
+$grey-d9:       #d9d9d9;
+$grey-e2:       #e2e2e5;
+$grey-e3:       #e3e3e6;
+$grey-e9:       #e9e9e9;
+$grey-b5:       #b5b5b5;
+$grey-35:       #353535;
+$grey-54:       #545454;
+$grey-66:       #666666;
+$grey-e5:       #e5e5e5;
+$grey-76:       #767676;
+$grey-90:       #909090;
+$grey-97:       #979797;
+$grey-98:       #b2b2b277;
+$red:           #e80c00;
+$ligth-red:     #c83430;
+$red-secondary: #990000;
+$green:         #1c8846;
+$ligth-green:   #007d17;
+$purple:        #bd10e0;
+$blue:          #1ea7fd;
+$blue-light:    #d9edf7;
+$pink:          #ffb3c7;
+$teal:          #b2fce4;
+$orange-light:  #ffc439;
+
+$black-alpha:         rgba(7, 7, 7, 0.05);
+$grey-alpha:          rgba(0, 0, 0, 0.08);
+$black-transparency:  rgba(0, 0, 0, 0.5);
+$black-not-visible:   rgba(0, 0, 0, 0);
+
+// Brand Colors
+$brand-primary-color: $black-1f;
+$brand-secondary-color: $grey-e2;
+$border-color: $grey-d9;
+
+// Responsive variables
+$break-xxsmall: 320px;
+$break-xsmall2: 360px;
+$break-xsmall3: 450px;
+$break-xsmall: 375px;
+$break-small: 640px;
+$break-regular: 768px;
+$break-medium: 1024px;
+$break-small-desktop: 1280px;
+$break-large-tablet: 1366px;
+$break-large: 1440px;
