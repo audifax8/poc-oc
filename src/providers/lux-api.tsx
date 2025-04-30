@@ -7,18 +7,18 @@ import { setProduct } from '../store/product';
 import { useSearchParams } from 'react-router-dom';
 import { setParams } from '../store/params';
 import { setCASToRender } from '../store/ui';
-import { IState, ICoreService, IProviderProps } from '../interfaces';
+import { IState, IProviderProps, ILuxBase } from '../interfaces';
 import { RBNService } from '../services/rbn';
 
 const createCore = require('@cfg.plat/configure-core');
 
-const CoreContext = createContext({});
+const LuxAPIContext = createContext({});
 
-export function useConfigure(): any {
-  return useContext(CoreContext);
+export function useLuxAPI(): any {
+  return useContext(LuxAPIContext);
 }
 
-export function CoreProvider(props: IProviderProps) {
+export function LuxAPIProvider(props: IProviderProps) {
   const dispatch = useDispatch();
   const params = useSelector((state: IState) => state?.params);
   const [queryParameters] = useSearchParams();
@@ -39,7 +39,7 @@ export function CoreProvider(props: IProviderProps) {
   };
 
   const { children } = props;
-  const [coreService, setCoreService] = useState<ICoreService>();
+  const [luxService, setLuxService] = useState<ILuxBase>();
   useEffect(() => {
     const { workflow, product, customer, locale, brand } = mergedParams;
     const graphUrl =
@@ -85,7 +85,7 @@ export function CoreProvider(props: IProviderProps) {
             dispatch(setParams(mergedParams));
             const casToRender = _rbnService.mapCas();
             dispatch(setCASToRender(casToRender));
-            setCoreService(_cService);
+            setLuxService(_rbnService);
           }
         );
       }
@@ -95,10 +95,10 @@ export function CoreProvider(props: IProviderProps) {
     });
 
   },[]);
-  const value = { coreService };
+  const value = { luxService };
   return (
-    <CoreContext.Provider value={value}>
+    <LuxAPIContext.Provider value={value}>
       {children}
-    </CoreContext.Provider>
+    </LuxAPIContext.Provider>
   );
 };

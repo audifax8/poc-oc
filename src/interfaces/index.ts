@@ -138,4 +138,10 @@ export interface ILuxBase {
   getToken(): string;
   decodeToken(): any[];
   mapCas():  ICAMap[];
+  coreService: ICoreService;
+}
+
+export interface IRTRService {
+  getVersion(): string;
+  init(token: string): void;
 }

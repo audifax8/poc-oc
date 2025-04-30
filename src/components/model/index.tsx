@@ -5,9 +5,9 @@ import { isMobile } from 'react-device-detect';
 
 import './index.scss';
 import { useEffect } from 'react';
-import { useConfigure } from '../../providers/core';
+import { useLuxAPI } from '../../providers/lux-api';
 import { IState } from '../../interfaces';
-//import { useRTR } from '../../providers/rtr';
+import { useRTR } from '../../providers/rtr';
 
 export function Model() {
   const name = useSelector((state: IState) => state?.product?.name);
@@ -15,15 +15,14 @@ export function Model() {
   const { loaded } = useSelector((state: IState) => state?.rtr);
   const avoidRTR = useSelector((state: IState) => state?.params?.avoidRTR);
 
-  const { coreService } = useConfigure();
-  //const { rtrService } = useRTR();
+  const { luxService } = useLuxAPI();
+  const { rtrService } = useRTR();
 
-  useEffect(() => {
-    if (name && loaded) {
+  useEffect(() => {  
+    if (name && loaded && luxService) {
       if (!avoidRTR) {
-        const token = coreService.getToken();
-        console.log({token});
-        //rtrService.init(token);
+        const token = luxService.getToken();
+        rtrService.init(token);
       }
     }
   },

@@ -24,12 +24,3 @@ export function Wrapper() {
     </div>
   );
 };
-
-
-/**
- * <RbnHeader />
-      <Header />
-      <Model />
-      <Footer />
-      <Menu />
- */
