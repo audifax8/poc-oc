@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { isMobile } from 'react-device-detect';
 
-import './index.scss';
 import { useEffect } from 'react';
 import { useLuxAPI } from '../../providers/lux-api';
 import { IState } from '../../interfaces';
 import { useRTR } from '../../providers/rtr';
 
+import './index.scss';
+import { setOn } from '../../store/rtr';
+
 export function Model() {
+  const dispatch = useDispatch();
   const name = useSelector((state: IState) => state?.product?.name);
-  //const name = false;
   const { loaded } = useSelector((state: IState) => state?.rtr);
   const avoidRTR = useSelector((state: IState) => state?.params?.avoidRTR);
 
@@ -23,12 +25,12 @@ export function Model() {
       if (!avoidRTR) {
         const token = luxService.getToken();
         rtrService.init(token);
+        dispatch(setOn(true));
       }
     }
   },
   [loaded, name]);
 
-  //const old = '/img/sk.png';
   const skeletonImgPath = `/img/${isMobile ? 'mobile' : 'desktop'}.png`;
 
   return (
@@ -59,4 +61,4 @@ export function Model() {
       </div>
     </section>
   );
-}
+};
