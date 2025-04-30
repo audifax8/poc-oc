@@ -1,3 +1,29 @@
-.fc-app {
-  box-sizing: border-box;
+@import './styles/config.scss';
+
+
+/* init Skeleton */
+.fc-skeleton {
+  animation: skeleton-loader 1s linear infinite alternate;
 }
+
+.fc-skeleton-text {
+  width: 7em;
+  height: .5em;
+  border-radius: .2rem;
+}
+
+.fc-skeleton-button {
+  width: auto;
+  height: auto;
+}
+
+@keyframes skeleton-loader {
+  0% {
+    background-color: $skeleton-0;
+  }
+
+  100% {
+    background-color: $skeleton-100;
+  }
+}
+/* end Skeleton */

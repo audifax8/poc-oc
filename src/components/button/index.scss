@@ -1,0 +1,21 @@
+@import '../../styles/config.scss';
+
+.fc-button {
+  display: flex;
+  height: 2rem;
+  padding: 0px 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 3rem;
+  background: $black-1f;
+  margin-right: 1.5rem;
+
+  & .fc-button--label {
+    color: $white;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 31.25rem;
+    text-transform: uppercase;
+  }
+}

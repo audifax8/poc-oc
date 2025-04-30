@@ -5,7 +5,7 @@ import './index.scss';
 import { useSelector } from 'react-redux';
 import { IState } from '../../interfaces';
 
-export function Header() {
+export function RBNHeader() {
   const { darkMode, menuOpen } = useSelector((state: IState) => state?.ui);
 
   const classes = `rbn-header ${darkMode ? 'fc-dark-mode' : ''} ${menuOpen ? 'fc-menu-open': ''}`;

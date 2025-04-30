@@ -5,7 +5,8 @@ import './index.scss';
 import Footer from './footer';
 import Menu from './menu';
 import Model from './model';*/
-import { Header } from '../rbn-header';
+import { RBNHeader } from '../rbn-header';
+import { Header } from '../header';
 import { useSelector } from 'react-redux';
 import { IState } from '../../interfaces';
 
@@ -15,6 +16,7 @@ export function Wrapper() {
   const classes = `fc-wrapper ${darkMode ? 'fc-dark-mode' : ''} ${menuOpen ? 'fc-menu-open': ''}`;
   return (
     <div className={classes}>
+      <RBNHeader />
       <Header />
       <div id='rxcApp' className='rxcApp'></div>
     </div>
