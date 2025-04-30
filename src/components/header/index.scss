@@ -7,8 +7,12 @@
   align-items: center;
   margin-left: 1.563rem;
 
-  @media (max-width: 700px) { 
-    margin-left: 0px;
+  & .fc-header--name.fc-dark-mode {
+    color: $white;
+  }
+
+  & .fc-skeleton-text {
+    width: 16rem;
   }
 
   & .fc-header--name {
@@ -23,10 +27,15 @@
 
     @media (max-width: 700px) { 
       padding: 0 1rem;
+      font-size: 1.3rem;
     }
   }
 
-  & .fc-header--name.fc-dark-mode {
-    color: $white;
+  @media (max-width: 700px) { 
+    margin-left: 0px;
+
+    & .fc-skeleton-text {
+      width: 11rem;
+    }
   }
 }

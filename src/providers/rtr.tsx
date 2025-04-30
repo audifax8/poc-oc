@@ -24,6 +24,12 @@ export function RTRProvider(props: IProviderProps) {
       dispatch(setScriptLoaded(true));
       dispatch(setEnabled(true));
     });
+    scriptTag.addEventListener('error', () => {
+      console.log('error');
+    });
+    scriptTag.addEventListener('fail', () => {
+      console.log('fail');
+    });
     document.body.appendChild(scriptTag);
   },[]);
   

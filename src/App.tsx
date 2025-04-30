@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { PreloadScripts } from './hooks/preload';
 import { LuxAPIProvider } from './providers/lux-api';
 import { RTRProvider } from './providers/rtr';
+import { VMProvider } from './providers/vm';
 import store from './store';
 
 import { Wrapper } from './components/wrapper';
@@ -18,7 +19,9 @@ function App() {
           <PreloadScripts></PreloadScripts>
           <LuxAPIProvider>
             <RTRProvider>
-              <Wrapper />
+              <VMProvider>
+                <Wrapper />
+              </VMProvider>
             </RTRProvider>  
           </LuxAPIProvider>
           </Provider>

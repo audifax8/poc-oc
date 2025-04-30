@@ -38,6 +38,8 @@ export interface IProduct {
   currency: string;
 };
 export interface ILuxApi {
+  loading: boolean,
+  failed: boolean,
   loaded: boolean;
   enabled: boolean;
   on: boolean;
@@ -139,9 +141,13 @@ export interface ILuxBase {
   decodeToken(): any[];
   mapCas():  ICAMap[];
   coreService: ICoreService;
-}
+};
 
 export interface IRTRService {
   getVersion(): string;
   init(token: string): void;
-}
+};
+
+export interface IVMMVService {
+  isBrowserSupported(): Promise<boolean>;
+};
