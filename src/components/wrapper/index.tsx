@@ -4,9 +4,10 @@ import './index.scss';
 /*import Header from './header';
 import Footer from './footer';
 import Menu from './menu';
-import Model from './model';*/
+*/
 import { RBNHeader } from '../rbn-header';
 import { Header } from '../header';
+import { Model } from '../model';
 import { useSelector } from 'react-redux';
 import { IState } from '../../interfaces';
 
@@ -18,6 +19,7 @@ export function Wrapper() {
     <div className={classes}>
       <RBNHeader />
       <Header />
+      <Model />
       <div id='rxcApp' className='rxcApp'></div>
     </div>
   );

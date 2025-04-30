@@ -26,6 +26,7 @@ export interface IParams {
   apiKey: string;
   locale: string;
   brand: string;
+  avoidRTR: boolean;
 };
 export interface ICore {
   loaded: boolean;
