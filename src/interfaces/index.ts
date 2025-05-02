@@ -108,8 +108,9 @@ export interface ICAMap {
   id: number | null;
   alias: string;
   icon: string;
-  //ca: IConfigurableAttribute | null;
+  ca?: IConfigurableAttribute | null;
   selectedAvId: number | null;
+  selectedAv?: IAttributeValue | null;
   skeleton?: boolean;
 };
 export interface IAttributeValue {

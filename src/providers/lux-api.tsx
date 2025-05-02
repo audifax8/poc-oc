@@ -78,7 +78,7 @@ export function LuxAPIProvider(props: IProviderProps) {
               return;
             }
             const _cService = new CoreService(configureCore);
-            const _rbnService = new RBNService(configureCore);
+            const _rbnService = new RBNService(_cService);
             const product = _cService.getProduct();
             dispatch(setLoaded(true));
             dispatch(setProduct(product));

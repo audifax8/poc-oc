@@ -8,6 +8,7 @@ import Menu from './menu';
 import { RBNHeader } from '../rbn-header';
 import { Header } from '../header';
 import { Model } from '../model';
+import { Menu } from '../menu';
 import { useSelector } from 'react-redux';
 import { IState } from '../../interfaces';
 
@@ -19,6 +20,7 @@ export function Wrapper() {
     <div className={classes}>
       <RBNHeader />
       <Header />
+      <Menu />
       <Model />
       <div id='rxcApp' className='rxcApp'></div>
     </div>

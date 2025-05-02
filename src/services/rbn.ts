@@ -1,7 +1,8 @@
 import {
   ICoreService,
   ICAMap,
-  ILuxBase
+  ILuxBase,
+  IConfigurableAttribute
 } from '../interfaces';
 
 import { TOKEN_ALIASES, casToMap } from '../constants/rbn';
@@ -60,8 +61,10 @@ export class RBNService implements ILuxBase {
           if (configurableAttibute) {
             return {
               ...ca,
+              ca: configurableAttibute,
               id: configurableAttibute.id,
-              selectedAvId: av.id
+              selectedAvId: av.id,
+              selectedAv: av
             };
           }
         } catch (e) {
