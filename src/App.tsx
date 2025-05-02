@@ -6,6 +6,7 @@ import { PreloadScripts } from './hooks/preload';
 import { LuxAPIProvider } from './providers/lux-api';
 import { RTRProvider } from './providers/rtr';
 import { VMProvider } from './providers/vm';
+import { RXCProvider } from './providers/rxc';
 import store from './store';
 
 import { Wrapper } from './components/wrapper';
@@ -19,9 +20,11 @@ function App() {
           <PreloadScripts></PreloadScripts>
           <LuxAPIProvider>
             <RTRProvider>
-              <VMProvider>
-                <Wrapper />
-              </VMProvider>
+              <RXCProvider>
+                <VMProvider>
+                  <Wrapper />
+                </VMProvider>
+              </RXCProvider>
             </RTRProvider>  
           </LuxAPIProvider>
           </Provider>

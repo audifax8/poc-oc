@@ -152,3 +152,7 @@ export interface IRTRService {
 export interface IVMMVService {
   isBrowserSupported(): Promise<boolean>;
 };
+
+export interface IRXCService {
+  renderRxc(): Promise<boolean>;
+};
