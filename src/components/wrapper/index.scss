@@ -1,20 +1,20 @@
 @import '../../styles/config.scss';
 
 .fc-wrapper {
-  /*background-image: url('../../public/img/light-backgroung-desktop.png');*/
+  background-image: url('../../../public/img/light-backgroung-desktop.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   background-size: 100vw 100vh;
   /*background: rgba(255, 255, 255, 0.70);*/
-  background: $grey-f6;
+  //background: $grey-f6;
   /*
   --base-gray-ultra-light: #f6f6f6;
     --base-gray-light: #d8d8d8;
     --base-gray-dark: #767676;
   */
-  backdrop-filter: blur(12.5px);
-  position: relative;
+  //backdrop-filter: blur(12.5px);
+  //position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: 
@@ -24,7 +24,7 @@
     '. fc-footer';
 
   @media (max-width: 700px) { 
-    /*background-image: url('../../public/img/light-backgroung-mobile.png');*/
+    background-image: url('../../../public/img/light-backgroung-mobile.png');
   }
 
   @media (max-width: 700px) {

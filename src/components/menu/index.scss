@@ -3,7 +3,7 @@
 .fc-menu {
   border-radius: 1.5rem;
   border: 1px solid $white;
-  background: rgba(255, 255, 255, 0.70);
+  background: $gray-background;;
   backdrop-filter: blur(12.5px);
   margin: 1.5rem;
   height: fit-content;
@@ -22,5 +22,16 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+
+    /*& li + li {
+      height: 1px;
+      border-bottom: 2px solid red;
+    }*/
+
+    & li:not(:last-child) {
+      & .fc-attribute-header--divider {
+        display: block;
+      }
+    }
   }
 }

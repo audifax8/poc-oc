@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import configureCore from './core';
+import core from './core';
 import model from './model';
 import product from './product';
 import params from './params';
@@ -11,7 +11,7 @@ import skeleton from './skeleton';
 
 export default configureStore({
   reducer: {
-    configureCore,
+    core,
     model,
     product,
     params,

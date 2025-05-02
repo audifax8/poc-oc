@@ -10,8 +10,6 @@ export function Menu() {
   const loaded = useSelector((state: IState) => state?.core?.loaded);
   const { menuCas } = useSelector((state: IState) => state?.skeleton);
   const { casToRender } = useSelector((state: IState) => state?.ui);
-
-  console.log({casToRender});
   
   return (
     <section
@@ -19,7 +17,10 @@ export function Menu() {
     >
       <nav aria-label='configurable attributes menu' id='accordionGroup'>
         <ul className='menubar-navigation' aria-label='configurable attributes menu'>
-          {casToRender && casToRender.length && (
+          {!loaded && (
+            menuCas.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
+          )}
+          {loaded && casToRender && casToRender.length && (
             casToRender.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
           )}
         </ul>
@@ -27,14 +28,3 @@ export function Menu() {
     </section>
   );
 }
-/*
-
-<li role='none'>
-            <a role='menuitem' href='#home'> Home </a>
-          </li>
-
-{!loaded &&
-        menuCas.map((skeletonCa: ICAMap) => <AttributeHeader caInfo={skeletonCa} onClick={() => {}}/>)
-      }
-
-      */

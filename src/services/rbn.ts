@@ -1,8 +1,7 @@
 import {
   ICoreService,
   ICAMap,
-  ILuxBase,
-  IConfigurableAttribute
+  ILuxBase
 } from '../interfaces';
 
 import { TOKEN_ALIASES, casToMap } from '../constants/rbn';
