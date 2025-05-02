@@ -1,0 +1,121 @@
+@import '../../styles/config.scss';
+
+.fc-footer {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-left: 25px;
+  padding: 10px;
+  box-sizing: border-box;
+
+  & .fc-footer-actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & .fc-footer--show-menu {
+      display: none;
+    }
+  }
+
+  & .fc-footer-price-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & .fc-skeleton-text {
+      width: 4em;
+    }
+  }
+
+  @media (max-width: 700px) {
+    padding: 10px 0;
+    height: 10vh;
+    margin-left: 0px;
+
+    & .fc-footer-actions {
+      justify-content: space-between;
+
+      & .fc-footer--show-menu {
+        display: flex;
+      }
+    }
+
+    & .fc-footer-price-info {
+      justify-content: space-between;
+    }
+
+    & .fc-footer--rxc {
+      margin-left: 21px;
+
+      & .fc-button {
+        display: flex;
+        height: 32px;
+        padding: 0px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 48px;
+        background: $black-1f;
+      }
+    }
+  }
+
+  & .fc-footer-price-info {
+    & .fc-button {
+      border-radius: 1px;
+      background: $red;
+      border-color: $red;
+    }
+  }
+
+  & .fc-footer--price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 16px;
+    gap: 8px;
+
+    & .fc-footer-final-price {
+      color: $red;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 160%; /* 25.6px */
+      text-transform: uppercase;
+    }
+
+    & .fc-footer-total-price {
+      color: $grey-66;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 160%; /* 22.4px */
+      text-decoration-line: line-through;
+    }
+
+    & .fc-footer-discount-price {
+      border-radius: 32px;
+      border: 1px solid $black-1f;
+      background: #FFF;
+
+      display: flex;
+      height: 20px;
+      padding: 0px 8px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+
+      color: $black-1f;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 160%; /* 19.2px */
+      text-transform: uppercase;
+    }
+  }
+}
