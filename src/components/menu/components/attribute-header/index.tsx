@@ -71,19 +71,19 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
               </div>
             </button>
           </h3>
+          {menuOpen && (
+            <ul
+              className='fc-attribute-values'
+              aria-label='attribute values menu'
+            >
+              {props?.caInfo?.ca && (
+                props?.caInfo?.ca?.values.map((av: IAttributeValue) => <pre>{av.name}</pre>)
+              )}
+            </ul>
+          )}
           <AttributeHeaderDivider />
         </li>
       }
-      {menuOpen && (
-        <ul
-          className=''
-          aria-label='attribute values menu'
-        >
-          {props?.caInfo?.ca && (
-            props?.caInfo?.ca?.values.map((av: IAttributeValue) => <pre>{av.name}</pre>)
-          )}
-        </ul>
-      )}
     </>
   );
 });

@@ -18,8 +18,10 @@ export function Wrapper() {
     <div className={classes}>
       <RBNHeader />
       <Header />
-      <Model />
-      <Menu />
+      <div className='fc-main'>
+        <Model />
+        <Menu />
+      </div>
       <Footer />
       <div id='rxcApp' className='rxcApp'></div>
     </div>

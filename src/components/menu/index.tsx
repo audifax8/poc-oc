@@ -17,6 +17,94 @@ export function Menu() {
   
   return (
     <section
+      className='fc-menu'
+    >
+      <nav
+        id='accordionGroup'
+        aria-label='configurable attributes menu'
+        className='fc-accordion'
+      >
+        <ul
+          className='fc-accordion-list'
+          aria-label='configurable attributes menu'
+        >
+          {!loaded && (
+            menuCas.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
+          )}
+          {loaded && casToRender && casToRender.length && (
+            casToRender.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
+          )}
+        </ul>
+      </nav>
+    </section>
+  );
+}
+
+/*
+
+ <ul>
+      <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+      </ul>
+
+*/
+
+/**
+
+return (
+    <section
       className={`fc-menu ${!loaded ? '' : ''}`}
     >
       <nav aria-label='configurable attributes menu' id='accordionGroup'>
@@ -31,4 +119,5 @@ export function Menu() {
       </nav>
     </section>
   );
-}
+
+ */

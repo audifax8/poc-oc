@@ -2,35 +2,45 @@
 
 .fc-menu {
   border-radius: 1.5rem;
-  border: 1px solid $white;
-  background: $gray-background;;
-  backdrop-filter: blur(12.5px);
-  margin: 1.5rem;
-  height: fit-content;
+  height: inherit;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & .fc-accordion {
+    border-radius: 1.5rem;
+
+    border: 1px solid #FFF;
+    background: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(12.5px);
+
+    /*border: 1px solid $white;
+    background: $gray-background;;
+    backdrop-filter: blur(12.5px);*/
+    margin: 1.5rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & .fc-accordion-list {
+      height: max-content;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: inherit;
+
+      & li:not(:last-child) {
+        & .fc-attribute-header--divider {
+          display: block;
+        }
+      }
+    }
+  }
 
   /*@media (max-width: 700px) { 
     display: none;
   }*/
-
-  & .fc-menu--list {
-    list-style-type: none;
-    margin: 0.5rem;
-    padding: 0;
-  }
-
-  & ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
-    & li:not(:last-child) {
-      & .fc-attribute-header--divider {
-        display: block;
-      }
-    }
-
-    & .fc-attribute-header--divider {
-      display: block;
-    }
-  }
 }
