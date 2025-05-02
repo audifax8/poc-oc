@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, memo } from 'react';
 
 import './index.scss';
-import { IAttributeHeaderPropTypes } from '../../../../interfaces';
+import { IAttributeHeaderPropTypes, IAttributeValue } from '../../../../interfaces';
 import { AttributeHeaderDivider } from '../attribute-header-divider';
 
 export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
@@ -74,7 +74,16 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
           <AttributeHeaderDivider />
         </li>
       }
-      {menuOpen && (<pre></pre>)}
+      {menuOpen && (
+        <ul
+          className=''
+          aria-label='attribute values menu'
+        >
+          {props?.caInfo?.ca && (
+            props?.caInfo?.ca?.values.map((av: IAttributeValue) => <pre>{av.name}</pre>)
+          )}
+        </ul>
+      )}
     </>
   );
 });
