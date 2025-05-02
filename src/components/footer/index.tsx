@@ -72,7 +72,7 @@ export function Footer() {
         <div className='fc-footer--cart'>
           <Button
               label='add to cart'
-              enabled={!coreLoaded}
+              enabled={coreLoaded}
               skeleton={!coreLoaded}
               onClickCallback={(e: React.MouseEvent) => {
                 const { coreService } = luxService;

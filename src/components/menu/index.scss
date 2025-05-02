@@ -23,15 +23,14 @@
     margin: 0;
     padding: 0;
 
-    /*& li + li {
-      height: 1px;
-      border-bottom: 2px solid red;
-    }*/
-
     & li:not(:last-child) {
       & .fc-attribute-header--divider {
         display: block;
       }
+    }
+
+    & .fc-attribute-header--divider {
+      display: block;
     }
   }
 }

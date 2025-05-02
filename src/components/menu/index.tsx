@@ -6,6 +6,10 @@ import { AttributeHeader } from './components/attribute-header';
 import './index.scss';
 import { ICAMap, IState } from '../../interfaces';
 
+/**
+ * markup based on:
+ * https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/
+*/
 export function Menu() {
   const loaded = useSelector((state: IState) => state?.core?.loaded);
   const { menuCas } = useSelector((state: IState) => state?.skeleton);

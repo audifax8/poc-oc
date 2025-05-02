@@ -124,6 +124,11 @@ export interface IAttributeValue {
   name: string;
   metadata: any[];
 };
+
+export interface IAttributeHeaderPropTypes {
+  onClick: Function;
+  caInfo: ICAMap;
+};
 export interface ICoreService {
   getProduct(): any;
   getProductName(): string;
