@@ -46,7 +46,7 @@
 
     @media (max-width: 700px) {
 
-      & .rbn-header {
+      & .fc-header {
         display: none;
       }
 
@@ -60,9 +60,15 @@
         margin: 0;
       }
 
-      grid-template-areas: 
+      /*grid-template-areas: 
         'fc-header'
         'fc-model'
+        'fc-footer'
+        'fc-menu';*/
+
+      grid-template-areas: 
+        'rbn-header'
+        'fc-main'
         'fc-footer'
         'fc-menu';
     }
@@ -96,6 +102,14 @@
     'fc-model fc-menu';
   overflow: hidden;
   height: 78vh;
+
+  @media (max-width: 700px) {
+    height: 80vh;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      'fc-model'
+      'fc-menu';
+  }
 }
 
 .fc-main .fc-model {
