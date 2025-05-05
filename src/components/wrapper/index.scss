@@ -60,15 +60,26 @@
         margin: 0;
       }
 
+      & .fc-footer {
+        height: 10vh;
+        & .fc-footer-actions {
+          display: none;
+        }
+      }
+
       /*grid-template-areas: 
         'fc-header'
         'fc-model'
         'fc-footer'
         'fc-menu';*/
 
+      & .fc-main {
+        display: none;
+      }
+
       grid-template-areas: 
         'rbn-header'
-        'fc-main'
+        'fc-model'
         'fc-footer'
         'fc-menu';
     }
