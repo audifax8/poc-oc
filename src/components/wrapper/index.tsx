@@ -20,9 +20,11 @@ export function Wrapper() {
       <Header />
       <div className='fc-main'>
         <Model />
-        <Menu />
+        <div className='fc-menu-footer'>
+          <Menu />
+          <Footer />
+        </div>
       </div>
-      <Footer />
       <div id='rxcApp' className='rxcApp'></div>
     </div>
   );

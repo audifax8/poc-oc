@@ -3,11 +3,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 7vh;
-
-  @media (max-width: 700px) { 
-    height: 5vh;
-  }
 
   & .rbn-header--logo {
     padding-left: 2rem;
@@ -15,5 +10,20 @@
 
   & .rbn-header--menu {
     padding-right: 1.5rem;
+  }
+}
+
+.fc-menu-open {
+  & .rbn-header {
+    & .rbn-header--logo {
+      padding-left: 1rem;
+
+      & .fc-button {
+        background: unset;
+        padding: 0;
+        border: unset;
+        height: unset;
+      }
+    } 
   }
 }

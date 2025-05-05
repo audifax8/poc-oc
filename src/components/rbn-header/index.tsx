@@ -1,17 +1,26 @@
 
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import './index.scss';
-import { useSelector } from 'react-redux';
+import Button from '../button';
+import { setMenuOpen } from '../../store/ui';
 import { IState } from '../../interfaces';
 
+import './index.scss';
 export function RBNHeader() {
+  const dispatch = useDispatch();
   const { darkMode, menuOpen } = useSelector((state: IState) => state?.ui);
+
+  const onClickBack = async () => {
+    dispatch(setMenuOpen(false));
+  };
 
   const classes = `rbn-header ${darkMode ? 'fc-dark-mode' : ''} ${menuOpen ? 'fc-menu-open': ''}`;
   return (
     <header className={classes}>
       <div className='rbn-header--logo'>
+      {!menuOpen ?
+      (
         <svg xmlns="http://www.w3.org/2000/svg" width="73" height="32" viewBox="0 0 73 32" fill="none">
           <g clipPath="url(#clip0_8988_9834)">
             <path d="M29.9056 17.7441C28.9052 17.7441 28.0731 21.7153 27.2556 21.6767C26.5678 21.6445 27.143 18.9375 26.0882 18.9306C25.4408 18.9262 25.2472 20.012 24.9524 20.9434C24.9353 20.9966 24.4575 22.8714 23.7318 22.8714C23.2698 22.8714 22.8655 22.5019 22.8655 21.4085C22.8655 20.8972 22.8402 20.136 22.2289 20.0094C21.1703 19.7905 21.412 20.8782 20.4844 20.7029C17.973 20.229 16.0721 25.3866 17.5996 26.0776C19.4308 26.9053 20.7672 23.6561 21.314 23.7453C21.7309 23.8136 21.4601 25.2133 22.7744 25.124C23.8456 25.0513 24.691 22.8385 25.108 22.8645C25.4775 22.8879 25.1561 24.1964 26.0799 24.2451C27.162 24.3021 27.608 22.5063 28.1016 22.4975C28.225 22.4956 28.2788 22.5886 28.268 23.0302C28.2541 23.6307 28.1737 31.2448 28.1617 31.4916C28.1389 31.9611 28.3661 31.9997 28.468 31.9997C28.5376 31.9997 29.5772 31.9782 29.7772 31.9699C29.9771 31.9617 30.0119 31.7744 30.01 31.6599C30.0094 31.6144 30.1543 20.577 30.1644 18.1877C30.1663 17.7441 29.9815 17.7441 29.9056 17.7441ZM20.99 22.2887C20.7394 23.1884 19.7219 24.6685 19.2461 24.7141C19.1044 24.7273 18.8987 24.6527 18.9063 24.3281C18.924 23.5674 20.1111 21.8444 20.6014 21.7135C20.9362 21.6236 21.0855 21.9495 20.9906 22.2893L20.99 22.2887Z" fill={`${darkMode ? 'white' : 'black'}`} />
@@ -33,6 +42,18 @@ export function RBNHeader() {
             </clipPath>
           </defs>
         </svg>
+      ) :
+      (
+        <Button
+          icon={
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M16.2934 23.707L4.58594 12L16.2934 0.292969L17.7074 1.70697L7.41494 12L17.7074 22.293L16.2934 23.707Z" fill="#1F1F24"/>
+            </svg>
+          }
+          onClickCallback={onClickBack}
+          enabled={true}
+        />
+      )}
       </div>
       <div className='rbn-header--menu'>
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="12" viewBox="0 0 28 12" fill="none">

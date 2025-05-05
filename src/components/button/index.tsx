@@ -6,7 +6,7 @@ import { IState } from '../../interfaces';
 import './index.scss';
 
 interface IButtonProps {
-  label: String;
+  label?: String;
   enabled: Boolean;
   onClickCallback: Function;
   skeleton?: Boolean;
