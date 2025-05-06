@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState, memo } from 'react';
 
-import './index.scss';
 import { IAttributeHeaderPropTypes, IAttributeValue } from '../../../../interfaces';
 import { AttributeHeaderDivider } from '../attribute-header-divider';
+import { Swatch } from '../swatch';
 
+import './index.scss';
 export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
-  const { icon, skeleton } = props.caInfo;
+  const { icon, skeleton, ca } = props.caInfo;
   const [menuOpen, setMenuOpen] = useState(false);
 
   const imgClasses = `fc-attribute-header--info--image ${skeleton ? 'fc-skeleton': ''}`;
@@ -77,7 +78,9 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
               aria-label='attribute values menu'
             >
               {props?.caInfo?.ca && (
-                props?.caInfo?.ca?.values.map((av: IAttributeValue) => <pre>{av.name}</pre>)
+                props?.caInfo?.ca?.values
+                  .filter((av: IAttributeValue) => av.selectable && av.active)
+                  .map((av: IAttributeValue) => <Swatch av={av} caAlias={ca?.alias}/>)
               )}
             </ul>
           )}

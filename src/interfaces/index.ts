@@ -64,17 +64,27 @@ export interface IState {
   ui: IUI;
   skeleton: ISkeleton;
 };
-export interface IAttributeValue {
-  active: boolean;
-  selected: boolean;
-  selectable: boolean;
+export interface IFacetValue {
   id: number;
-  url?: string;
-  vendorId: string;
-  alias: string;
   name: string;
-  metadata: any[];
+  selectable: boolean;
 };
+
+export interface ICAFacet {
+  name: string;
+  id: number;
+  facetValues: IFacetValue[];
+};
+
+export interface IAVFacet {
+  [key: string]: number[]; 
+};
+
+export interface IFacetFacetValueMap {
+  id?: number;
+  name?: string;
+  facetValuesMapped?: IFacetValue;
+}
 export interface IConfigurableAttribute {
   id: number;
   alias: string;
@@ -82,22 +92,12 @@ export interface IConfigurableAttribute {
   name: string;
   values: IAttributeValue[];
   metadata: any[];
+  allFacets: ICAFacet[];
 };
 export interface IProduct {
   name: string;
   id: number;
   vendorId: string;
-};
-export interface IAttributeValue {
-  active: boolean;
-  selected: boolean;
-  selectable: boolean;
-  id: number;
-  url?: string;
-  vendorId: string;
-  alias: string;
-  name: string;
-  metadata: any[];
 };
 
 export enum RenderType {
@@ -123,6 +123,7 @@ export interface IAttributeValue {
   alias: string;
   name: string;
   metadata: any[];
+  facets: IAVFacet;
 };
 
 export interface IAttributeHeaderPropTypes {

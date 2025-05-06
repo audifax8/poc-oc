@@ -1,7 +1,12 @@
 import {
   ICoreService,
   ICAMap,
-  ILuxBase
+  ILuxBase,
+  IAttributeValue,
+  IAVFacet,
+  ICAFacet,
+  IConfigurableAttribute,
+  IFacetFacetValueMap
 } from '../interfaces';
 
 import { TOKEN_ALIASES, casToMap } from '../constants/rbn';
@@ -48,6 +53,39 @@ export class RBNService implements ILuxBase {
 
   decodeToken(): any[] {
     return [];
+  };
+
+  getFacetsValuesByAv(av:IAttributeValue, ca: IConfigurableAttribute): IFacetFacetValueMap [] {
+    const { facets } = av;
+    const { allFacets } = ca;
+    if (!facets || !allFacets) { return []; }
+
+    const facetFacetValuesMapped: IFacetFacetValueMap[] = [];
+
+    Object.keys(facets).forEach((key: string) => {
+      const avFacetId = parseInt(key, 10);
+      const avFacetIds = facets[key];
+      const facet = allFacets.find((facet: ICAFacet) => facet.id === avFacetId);
+      const facetValues = facet?.facetValues.find((fv) => avFacetIds.includes(fv.id));
+      const facetFacetValueMap: IFacetFacetValueMap = {
+        id: facet?.id,
+        name: facet?.name,
+        facetValuesMapped: facetValues
+      };
+      facetFacetValuesMapped.push(facetFacetValueMap);
+    });
+    return facetFacetValuesMapped;
+  }
+
+  getSwatchURL(av: IAttributeValue, caName: string): string {
+    const ca = this.coreService.getAttributeByAlias(caName);
+    const facetFacetValuesMapped = this.getFacetsValuesByAv(av, ca);
+    const colorCode = facetFacetValuesMapped.find(f => f.name === 'Color Code');
+    if (colorCode) {
+      const { facetValuesMapped } = colorCode;
+      return `//cdn-prod.fluidconfigure.com/static/fluid-implementation-lux.s3.amazonaws.com/ray-ban/color_code_swatches/swatch_${facetValuesMapped?.name}.png`;
+    }
+    return '';
   };
   
   mapCas(): ICAMap[] {

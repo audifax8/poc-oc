@@ -22,7 +22,7 @@ export function Model() {
 
   useEffect(() => {  
     if (name && loaded && luxService) {
-      if (!avoidRTR) {
+      if (!avoidRTR && rtrService) {
         const token = luxService.getToken();
         rtrService.init(token);
         dispatch(setOn(true));
