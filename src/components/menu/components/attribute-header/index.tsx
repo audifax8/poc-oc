@@ -7,7 +7,8 @@ import { Swatch } from '../swatch';
 
 import './index.scss';
 export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
-  const { icon, skeleton, ca } = props.caInfo;
+  const { caInfo } = props;
+  const { id, icon, skeleton, ca } = caInfo;
   const [menuOpen, setMenuOpen] = useState(false);
 
   const imgClasses = `fc-attribute-header--info--image ${skeleton ? 'fc-skeleton': ''}`;
@@ -18,7 +19,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
   return (
     <>
       {
-        <li>
+        <li key={id}>
           <h3 className='fc-attribute-header'>
             <button
               type='button'

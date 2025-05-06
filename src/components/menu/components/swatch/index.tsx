@@ -15,10 +15,10 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
   const { av, caAlias } = props;
   const [selected, setSelected] = useState(false);
 
-  /*const imgClasses = `fc-attribute-header--info--image ${skeleton ? 'fc-skeleton': ''}`;
-  const caClasses = `fc-attribute-header--info--ca-name ${skeleton ? 'fc-skeleton fc-skeleton-text': ''}`;
-  const avClasses = `fc-attribute-header--info--ca-name ${skeleton ? 'fc-skeleton fc-skeleton-text': ''}`;
-  const iconClasses = `fc-attribute-header--icon--image ${skeleton ? 'fc-skeleton': ''}`;*/
+  const imgClasses =
+    `fc-swatch-wrapper--img ${av.selected ?
+      'fc-swatch-wrapper--img--selected':
+      'fc-swatch-wrapper--img--border'}`
 
   return (
     <>
@@ -30,9 +30,9 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
             onClick={(e) => console.log(e)}
           >
             <div className='fc-swatch-wrapper'>
-              <div className='fc-swatch-wrapper--img'>
+              <div className={imgClasses}>
                 <img src={luxService.getSwatchURL(av, caAlias)} alt={av.name}></img>
-              </div>
+                </div>
               <div className='fc-swatch-wrapper--name'>
                 <span>{av?.name}</span>
               </div>
