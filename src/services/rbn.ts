@@ -6,7 +6,8 @@ import {
   IAVFacet,
   ICAFacet,
   IConfigurableAttribute,
-  IFacetFacetValueMap
+  IFacetFacetValueMap,
+  IMenuCA
 } from '../interfaces';
 
 import { TOKEN_ALIASES, casToMap } from '../constants/rbn';
@@ -109,6 +110,41 @@ export class RBNService implements ILuxBase {
         }
       }
     ) as ICAMap[];
+    const sanitizedCas = mappedCAs.filter((ca: ICAMap) => ca);
+    return sanitizedCas;
+  };
+
+  mapCas2(): IMenuCA[] {
+    const mappedCAs = casToMap.map(
+      (ca: ICAMap) => {
+        const { alias } = ca;
+        try {
+          const configurableAttibute = this.coreService.getAttributeByAlias(alias);
+          const selectableAVs = configurableAttibute.values.filter(av => av.selectable && av.active);
+          const avsLenght = selectableAVs.length;
+          const currentPage = avsLenght > 5 ? 5 : avsLenght;
+          const avsToRender = selectableAVs.slice(0, currentPage);
+          
+          const av = this.coreService.getSelectedAV(alias);
+          if (configurableAttibute) {
+            return {
+              ...ca,
+              ca: configurableAttibute,
+              id: configurableAttibute.id,
+              selectedAvId: av.id,
+              selectedAv: av,
+              avsLenght,
+              open: false,
+              currentPage,
+              skeleton: false,
+              avsToRender
+            };
+          }
+        } catch (e) {
+          return undefined;
+        }
+      }
+    ) as IMenuCA[];
     const sanitizedCas = mappedCAs.filter((ca: ICAMap) => ca);
     return sanitizedCas;
   };

@@ -54,6 +54,24 @@ export interface IUI {
   casToRender: any[];
   menuOpen: boolean;
 };
+
+export interface IMenuCA {
+  id: number | null;
+  alias: string;
+  icon: string;
+  ca?: IConfigurableAttribute | null;
+  selectedAvId: number | null;
+  selectedAv?: IAttributeValue | null;
+  avsToRender: IAttributeValue[];
+  open: boolean;
+  avsLenght: number;
+  currentPage: number;
+  skeleton?: boolean;
+};
+export interface IMenu {
+  cas: IMenuCA[];
+  //[key: string]: IMenuCA;
+}
 export interface IState {
   core: ICore;
   params: IParams;
@@ -63,6 +81,7 @@ export interface IState {
   vm: ILuxApi;
   ui: IUI;
   skeleton: ISkeleton;
+  menu: IMenu;
 };
 export interface IFacetValue {
   id: number;
@@ -77,7 +96,7 @@ export interface ICAFacet {
 };
 
 export interface IAVFacet {
-  [key: string]: number[]; 
+  [key: string]: number[];
 };
 
 export interface IFacetFacetValueMap {
@@ -113,6 +132,7 @@ export interface ICAMap {
   selectedAv?: IAttributeValue | null;
   skeleton?: boolean;
 };
+
 export interface IAttributeValue {
   active: boolean;
   selected: boolean;
@@ -128,7 +148,7 @@ export interface IAttributeValue {
 
 export interface IAttributeHeaderPropTypes {
   onClick: Function;
-  caInfo: ICAMap;
+  caInfo: IMenuCA;
 };
 export interface ICoreService {
   getProduct(): any;

@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, createContext, useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoaded } from '../store/core';
+import { setCas } from '../store/menu';
 import { CoreService } from '../services/core';
 import { setProduct } from '../store/product';
 import { useSearchParams } from 'react-router-dom';
@@ -84,6 +85,8 @@ export function LuxAPIProvider(props: IProviderProps) {
             dispatch(setProduct(product));
             dispatch(setParams(mergedParams));
             const casToRender = _rbnService.mapCas();
+            const test = _rbnService.mapCas2();
+            dispatch(setCas(test));
             dispatch(setCASToRender(casToRender));
             setLuxService(_rbnService);
           }

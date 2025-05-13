@@ -1,19 +1,23 @@
 import React from 'react';
 import { useState, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import './index.scss';
 import { IAttributeValue } from '../../../../interfaces';
 import { useLuxAPI } from '../../../../providers/lux-api';
+import { updateSelectedAv } from '../../../../store/menu';
 
+import './index.scss';
 export interface ISwatchPropTypes {
   av: IAttributeValue;
   caAlias: string | undefined;
 };
 
 export const Swatch = memo(function (props: ISwatchPropTypes) {
+  const dispatch = useDispatch();
   const { luxService } = useLuxAPI();
   const { av, caAlias } = props;
-  const [selected, setSelected] = useState(false);
+  //TODO
+  //const [selected, setSelected] = useState(false);
 
   const imgClasses =
     `fc-swatch-wrapper--img ${av.selected ?
@@ -27,7 +31,9 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
           <button
             type='button'
             className='fc-swatch'
-            onClick={(e) => console.log(e)}
+            onClick={() => {
+              return dispatch(updateSelectedAv({ avId: av.id, caAlias }));
+            }}
           >
             <div className='fc-swatch-wrapper'>
               <div className={imgClasses}>

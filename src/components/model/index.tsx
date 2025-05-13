@@ -7,9 +7,9 @@ import { useEffect } from 'react';
 import { useLuxAPI } from '../../providers/lux-api';
 import { IState } from '../../interfaces';
 import { useRTR } from '../../providers/rtr';
+import { setOn } from '../../store/rtr';
 
 import './index.scss';
-import { setOn } from '../../store/rtr';
 
 export function Model() {
   const dispatch = useDispatch();

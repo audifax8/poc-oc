@@ -4,16 +4,19 @@ import { useSelector } from 'react-redux';
 import { AttributeHeader } from './components/attribute-header';
 
 import './index.scss';
-import { ICAMap, IState } from '../../interfaces';
+import { ICAMap, IMenu, IMenuCA, IState } from '../../interfaces';
 
 /**
  * markup based on:
  * https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/
 */
 export function Menu() {
+  console.log('Menu');
+  console.log('@@@@here');
   const loaded = useSelector((state: IState) => state?.core?.loaded);
   const { menuCas } = useSelector((state: IState) => state?.skeleton);
-  const { casToRender } = useSelector((state: IState) => state?.ui);
+  //const { casToRender } = useSelector((state: IState) => state?.ui);
+  const { cas } = useSelector((state: IState) => state?.menu);
   
   return (
     <section
@@ -28,11 +31,16 @@ export function Menu() {
           className='fc-accordion-list'
           aria-label='configurable attributes menu'
         >
-          {!loaded && (
-            menuCas.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
-          )}
-          {loaded && casToRender && casToRender.length && (
-            casToRender.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
+          
+          {cas && cas.length &&
+            (cas.map((ca: IMenuCA) => {
+              console.log({cas, ca});
+              //const t = cas[caName] as IMenuCA;
+              //console.log({t});
+              return <AttributeHeader onClick={() => {}} caInfo={ca}/>
+              //return <></>;
+            }
+            )
           )}
         </ul>
       </nav>
@@ -40,84 +48,16 @@ export function Menu() {
   );
 }
 
+//{cas && Object.keys(cas).length && }
+
 /*
 
- <ul>
-      <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-      </ul>
-
-*/
-
-/**
-
-return (
-    <section
-      className={`fc-menu ${!loaded ? '' : ''}`}
-    >
-      <nav aria-label='configurable attributes menu' id='accordionGroup'>
-        <ul className='menubar-navigation' aria-label='configurable attributes menu'>
-          {!loaded && (
+{!loaded && (
             menuCas.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
           )}
-          {loaded && casToRender && casToRender.length && (
+
+{loaded && casToRender && casToRender.length && (
             casToRender.map((ca: ICAMap) => <AttributeHeader onClick={() => {}} caInfo={ca}/>)
           )}
-        </ul>
-      </nav>
-    </section>
-  );
 
- */
+*/
