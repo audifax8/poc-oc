@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import './index.scss';
 
@@ -7,10 +7,12 @@ interface IViewMoreProps {
   label: String;
   remainingItems: number;
   onClickCallback?: Function;
+  skeleton?: boolean;
 };
 
 export const ViewMore = (props: IViewMoreProps) => {
-  const { remainingItems, label, onClickCallback } = props;
+  const dispatch = useDispatch();
+  const { remainingItems, label, onClickCallback, skeleton } = props;
 
   const onClick = (e: React.MouseEvent) => {
     if (onClickCallback) {
@@ -19,16 +21,33 @@ export const ViewMore = (props: IViewMoreProps) => {
     return e;
   };
 
+  const imgClasses =
+    `fc-swatch-wrapper--img ${false ?
+      'fc-swatch-wrapper--img--selected':
+      'fc-swatch-wrapper--img--border'}`
+
   return (
-    <button
-      className={`fc-view-more`}
-      onClick={onClick}
-      aria-label={``}
-    >
-      <div className='fc-view-more--button'>
-        <span className='fc-view-more--button--items'>{`+ ${remainingItems}`}</span>
-        <span className='fc-view-more--button--label'>{label}</span>
-      </div>
-    </button>
+    <>
+    {
+      <li key={11}>
+        <button
+          type='button'
+          className='fc-swatch'
+          onClick={() => {
+            //return dispatch(updateSelectedAv({ avId: av.id, caAlias }));
+          }}
+        >
+          <div className='fc-swatch-wrapper'>
+            <div className={imgClasses}>
+              {`+ ${remainingItems}`}
+              </div>
+            <div className='fc-swatch-wrapper--name'>
+              <span>{label}</span>
+            </div>
+          </div>
+        </button>
+      </li>
+    }
+    </>
   );
 };
