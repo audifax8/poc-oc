@@ -7,7 +7,6 @@ import { CoreService } from '../services/core';
 import { setProduct } from '../store/product';
 import { useSearchParams } from 'react-router-dom';
 import { setParams } from '../store/params';
-import { setCASToRender } from '../store/ui';
 import { IState, IProviderProps, ILuxBase } from '../interfaces';
 import { RBNService } from '../services/rbn';
 
@@ -84,10 +83,9 @@ export function LuxAPIProvider(props: IProviderProps) {
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
             dispatch(setParams(mergedParams));
-            const casToRender = _rbnService.mapCas();
+            //TODO
             const test = _rbnService.mapCas2();
             dispatch(setCas(test));
-            dispatch(setCASToRender(casToRender));
             setLuxService(_rbnService);
           }
         );

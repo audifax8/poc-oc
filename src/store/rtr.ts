@@ -7,7 +7,8 @@ export const rtrSlice = createSlice({
     failed: false,
     loaded: false,
     enabled: false,
-    on: false
+    on: false,
+    camera: null
   },
   reducers: {
     setPatch: (state, action) => {
@@ -25,11 +26,14 @@ export const rtrSlice = createSlice({
     },
     setOn: (state, action) => {
       state.on = action.payload;
+    },
+    setCamera: (state, action) => {
+      state.camera = action.payload;
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setScriptLoaded, setEnabled, setOn, setPatch } = rtrSlice.actions;
+export const { setScriptLoaded, setEnabled, setOn, setPatch, setCamera } = rtrSlice.actions;
 
 export default rtrSlice.reducer;

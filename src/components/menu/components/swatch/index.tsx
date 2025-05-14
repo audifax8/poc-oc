@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { IAttributeValue } from '../../../../interfaces';
 import { useLuxAPI } from '../../../../providers/lux-api';
 import { updateSelectedAv } from '../../../../store/menu';
+import { updateToken } from '../../../../store/ui';
 
 import './index.scss';
 export interface ISwatchPropTypes {
@@ -29,7 +30,9 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
       await luxService.setRecipe(
         [{ ca: { alias: caAlias }, av: { id: av.id } }]
       );
-      return dispatch(updateSelectedAv({ avId: av.id, caAlias, name: av.name }));
+      dispatch(updateSelectedAv({ avId: av.id, caAlias, name: av.name }));
+      const token = luxService.getToken();
+      dispatch(updateToken(token));
     } catch (e) {
       console.log(e);
     }

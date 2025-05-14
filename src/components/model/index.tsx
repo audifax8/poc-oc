@@ -8,29 +8,42 @@ import { useLuxAPI } from '../../providers/lux-api';
 import { IState } from '../../interfaces';
 import { useRTR } from '../../providers/rtr';
 import { setOn } from '../../store/rtr';
+import { updateToken } from '../../store/ui';
 
 import './index.scss';
 
 export function Model() {
   const dispatch = useDispatch();
   const name = useSelector((state: IState) => state?.product?.name);
-  const { loaded } = useSelector((state: IState) => state?.rtr);
-  //const avoidRTR = useSelector((state: IState) => state?.params?.avoidRTR);
-  const avoidRTR = true;
+  const { loaded, on } = useSelector((state: IState) => state?.rtr);
+  const { token } = useSelector((state: IState) => state?.ui);
+  const avoidRTR = useSelector((state: IState) => state?.params?.avoidRTR);
 
   const { luxService } = useLuxAPI();
   const { rtrService } = useRTR();
 
-  useEffect(() => {  
-    if (name && loaded && luxService) {
+  useEffect(() => {
+    let newToken;
+    if (luxService) {
+      newToken = luxService.getToken();
+      dispatch(updateToken(newToken));
+    }
+
+    if (name && loaded && luxService && !on) {
       if (!avoidRTR && rtrService) {
-        const token = luxService.getToken();
-        rtrService.init(token);
+        rtrService.init(newToken);
         dispatch(setOn(true));
       }
     }
+
+    if (on && token !== null) {
+      const isValidToken = rtrService.isIdAvailable(token);
+      if (isValidToken) {
+        rtrService.setId(token);
+      }
+    }
   },
-  [loaded, name]);
+  [loaded, name, token]);
 
   //const skeletonImgPath = `/img/${isMobile ? 'mobile' : 'desktop'}.png`;
 

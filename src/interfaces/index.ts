@@ -50,9 +50,10 @@ export interface ISkeleton {
 
 export interface IUI {
   isMobile: boolean;
-  darkMode: boolean,
-  casToRender: any[];
+  isBrowser: boolean;
+  darkMode: boolean;
   menuOpen: boolean;
+  token: string;
 };
 
 export interface IMenuCA {
@@ -174,6 +175,8 @@ export interface ILuxBase {
 export interface IRTRService {
   getVersion(): string;
   init(token: string): void;
+  isIdAvailable(token: string): any;
+  setId(token: string): void;
 };
 
 export interface IVMMVService {

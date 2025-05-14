@@ -11,8 +11,8 @@ export const uiSlice = createSlice({
     isBrowser,
     isMobile: isMobile,
     darkMode: false,
-    casToRender: [],
-    menuOpen: false
+    menuOpen: false,
+    token: null
   },
   reducers: {
     setIsMobile: (state, action) => {
@@ -21,16 +21,16 @@ export const uiSlice = createSlice({
     setDarkMode: (state, action) => {
       state.darkMode = action.payload;
     },
-    setCASToRender: (state, action) => {
-      state.casToRender = action.payload;
-    },
     setMenuOpen: (state, action) => {
       state.menuOpen = action.payload;
+    },
+    updateToken: (state, action) => {
+      state.token = action.payload;
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setIsMobile, setDarkMode, setCASToRender, setMenuOpen } = uiSlice.actions;
+export const { setIsMobile, setDarkMode, setMenuOpen, updateToken } = uiSlice.actions;
 
 export default uiSlice.reducer;

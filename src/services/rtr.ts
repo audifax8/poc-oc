@@ -9,7 +9,34 @@ export class RTRService implements IRTRService {
 
   getVersion(): any {
     return this.api.getVersion();
+  };
+
+  async isIdAvailable(token: string): Promise<any> {
+    const dataToCheck = {
+      type: 'token',
+      value: token
+    };
+
+    const envParams = {
+      envs: {
+        ms: 'production',
+        catalog: 'production',
+        asset: 'production'
+      },
+      qa: false
+    };
+    return await this.api.isIdAvailable(
+      dataToCheck,
+      envParams
+    );
   }
+
+  setId(token: string): void {
+    this.api.setId({
+      type: 'token',
+      value: token
+    });
+  };
 
   init(token: string): void {
     const initData = {
