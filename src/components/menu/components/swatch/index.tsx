@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { memo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { IAttributeValue } from '../../../../interfaces';
 import { useLuxAPI } from '../../../../providers/lux-api';
@@ -10,17 +10,16 @@ import './index.scss';
 export interface ISwatchPropTypes {
   av: IAttributeValue;
   caAlias: string | undefined;
+  selectedAvId: number | null;
 };
 
 export const Swatch = memo(function (props: ISwatchPropTypes) {
   const dispatch = useDispatch();
   const { luxService } = useLuxAPI();
-  const { av, caAlias } = props;
-  //TODO
-  //const [selected, setSelected] = useState(false);
+  const { av, caAlias, selectedAvId } = props;
 
   const imgClasses =
-    `fc-swatch-wrapper--img ${av.selected ?
+    `fc-swatch-wrapper--img ${av.id === selectedAvId ?
       'fc-swatch-wrapper--img--selected':
       'fc-swatch-wrapper--img--border'}`
 

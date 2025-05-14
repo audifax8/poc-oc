@@ -89,7 +89,9 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
           aria-label='attribute values menu'
         >
           {menuCa?.avsToRender && menuCa?.avsToRender.length && (
-            menuCa?.avsToRender.map((av) => <Swatch av={av} caAlias={menuCa?.ca?.alias}/>)
+            menuCa?.avsToRender.map(
+              (av) => <Swatch av={av} caAlias={menuCa?.ca?.alias} selectedAvId={menuCa?.selectedAvId}/>
+            )
           )}
           {menuCa?.currentPage < menuCa?.avsLenght &&
             <ViewMore

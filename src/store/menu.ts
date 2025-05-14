@@ -8,46 +8,36 @@ export const menu = createSlice({
   },
   reducers: {
     setCas: (state, action) => {
-      console.log(action.payload);
-      /*state.cas = action.payload.reduce(
-        (acc: IMenu, curr: IMenuCA) => {
-          console.log('@####');
-          console.log({acc, curr});
-          let test = {} as IMenu;
-          test[curr.alias] = curr;
-          return {
-            ...test,
-            ...acc
-          };
-        },
-        {}
-      );*/
       state.cas = action.payload;
     },
     updateSelectedAv: (state, action) => {
       const { caAlias, avId } = action.payload;
-      console.log({caAlias, avId});
-      //state.cas = action.payload;
+      state.cas = state.cas.map((ca: IMenuCA) => {
+        if (ca.alias === caAlias) {
+          return {
+            ...ca,
+            selectedAvId: avId
+          };
+        }
+        return {
+          ...ca
+        };
+      }) as never[];
     },
     setMenuOpen: (state, action) => {
       const { caAlias, open } = action.payload;
-      const oldCas = state.cas as IMenuCA[];
-      const newCas = oldCas.map((ca) => {
+      state.cas = state.cas.map((ca: IMenuCA) => {
         if (ca.alias === caAlias) {
-          const ne = {...ca, open};
-          console.log(ne);
           return {
             ...ca,
-            open,
+            open
           };
         }
-        const ne = {...ca};
-        console.log(ne);
-        return ne;
+        return {
+          ...ca
+        };
       }) as never[];
-      console.log({caAlias, open, oldCas, newCas});
-      state.cas = newCas;
-      //state.cas = 
+      
     },
     loadAVs: (state, action) => {
       const { caAlias } = action.payload;
