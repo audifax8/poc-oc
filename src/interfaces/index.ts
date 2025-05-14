@@ -157,6 +157,7 @@ export interface ICoreService {
   getAttributeByAlias(alias: string): IConfigurableAttribute;
   getSelectedAV(alias: string): IAttributeValue;
   setRecipe(changes: any[], callback: Function): void;
+  on(eventName: string, callback: Function): void ;
 };
 
 export interface IProviderProps {

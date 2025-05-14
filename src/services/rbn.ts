@@ -17,6 +17,9 @@ export class RBNService implements ILuxBase {
 
   constructor(core: ICoreService) {
     this.coreService = core;
+    /*this.coreService.on('recipe:change', (c: any, c1: any, c2: any) => {
+      const token = this.getToken();
+    });*/
   }
 
   getToken(): string {

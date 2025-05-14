@@ -41,4 +41,10 @@ export class CoreService implements ICoreService {
       return cb(e,c);
     });
   };
+
+  on(eventName: string, cb: Function) {
+    this.configure.on(eventName, (c: any, c1: any, c2: any) => {
+      return cb(c, c1, c2);
+    })
+  }
 }
