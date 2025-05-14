@@ -120,7 +120,11 @@ export class RBNService implements ILuxBase {
         const { alias } = ca;
         try {
           const configurableAttibute = this.coreService.getAttributeByAlias(alias);
-          const selectableAVs = configurableAttibute.values.filter(av => av.selectable && av.active);
+          const selectableAVs =
+            configurableAttibute
+              .values
+              .filter(av => av.selectable && av.active && av.name !== 'Blank');
+
           const avsLenght = selectableAVs.length;
           const currentPage = avsLenght > 5 ? 5 : avsLenght;
           const avsToRender = selectableAVs.slice(0, currentPage);
@@ -148,4 +152,32 @@ export class RBNService implements ILuxBase {
     const sanitizedCas = mappedCAs.filter((ca: ICAMap) => ca);
     return sanitizedCas;
   };
+
+  reloadPagination(caAlias: string, currentPage: number, open: boolean): IMenuCA {
+    const ITEMS_BY_PAGE = 5;
+    const newPage = currentPage + ITEMS_BY_PAGE;
+    
+    const configurableAttibute = this.coreService.getAttributeByAlias(caAlias);
+    const selectableAVs =
+      configurableAttibute
+        .values
+        .filter(av => av.selectable && av.active && av.name !== 'Blank');
+
+    const avsLenght = selectableAVs.length;
+    const updatedPage = newPage > avsLenght ? avsLenght : newPage;
+    const avsToRender = selectableAVs.slice(0, updatedPage);
+    
+    const av = this.coreService.getSelectedAV(caAlias);
+    return {
+      ca: configurableAttibute,
+      id: configurableAttibute.id,
+      selectedAvId: av.id,
+      selectedAv: av,
+      avsLenght,
+      open,
+      currentPage: updatedPage,
+      skeleton: false,
+      avsToRender
+    } as IMenuCA;      
+  }
 };

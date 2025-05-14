@@ -1,23 +1,27 @@
 import React from 'react';
-import { useState, memo } from 'react';
+import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { IAttributeValue, IMenuCA, IState } from '../../../../interfaces';
+import { IMenuCA, IState } from '../../../../interfaces';
 import { AttributeHeaderDivider } from '../attribute-header-divider';
 import { Swatch } from '../swatch';
 import { ViewMore } from '../view-more';
 import { setMenuOpen, loadAVs } from '../../../../store/menu';
+import { useLuxAPI } from '../../../../providers/lux-api';
 
 import './index.scss';
 
 export interface IAttributeHeaderPropTypes {
   caAlias: string;
   skeleton?: boolean;
+  index?: number;
 };
 
 export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
   const dispatch = useDispatch();
-  const { caAlias, skeleton } = props;
+  const { luxService } = useLuxAPI();
+  const { caAlias, skeleton, index } = props;
   const menuCa = useSelector((state: IState) => state.menu.cas.find(ca => ca.alias === caAlias)) as IMenuCA;
+  const liId = menuCa?.id || index;
 
   const imgClasses = `fc-attribute-header--info--image ${skeleton ? 'fc-skeleton': ''}`;
   const caClasses = `fc-attribute-header--info--ca-name ${skeleton ? 'fc-skeleton fc-skeleton-text': ''}`;
@@ -25,11 +29,12 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
   const iconClasses = `fc-attribute-header--icon--image ${skeleton ? 'fc-skeleton': ''}`;
 
   const onViewMoreClick = () => {
-    dispatch(loadAVs({ caAlias }));
+    const newData = luxService.reloadPagination(caAlias, menuCa?.currentPage, menuCa?.open);
+    dispatch(loadAVs({ caAlias, newData }));
   };
 
   return (
-    <li key={menuCa?.id}>
+    <li key={liId}>
       <h3 className='fc-attribute-header'>
         <button
           type='button'
@@ -90,7 +95,8 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
         >
           {menuCa?.avsToRender && menuCa?.avsToRender.length && (
             menuCa?.avsToRender.map(
-              (av) => <Swatch av={av} caAlias={menuCa?.ca?.alias} selectedAvId={menuCa?.selectedAvId}/>
+              (av, index) =>
+                <Swatch av={av} caAlias={menuCa?.ca?.alias} selectedAvId={menuCa?.selectedAvId} index={index}/>
             )
           )}
           {menuCa?.currentPage < menuCa?.avsLenght &&

@@ -37,12 +37,20 @@ export const menu = createSlice({
           ...ca
         };
       }) as never[];
-      
     },
     loadAVs: (state, action) => {
-      const { caAlias } = action.payload;
-      console.log({caAlias });
-      //state.cas = action.payload;
+      const { caAlias, newData } = action.payload;
+      state.cas = state.cas.map((ca: IMenuCA) => {
+        if (ca.alias === caAlias) {
+          return {
+            ...ca,
+            ...newData
+          };
+        }
+        return {
+          ...ca
+        };
+      }) as never[];
     }
   },
 });

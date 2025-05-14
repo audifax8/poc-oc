@@ -11,12 +11,13 @@ export interface ISwatchPropTypes {
   av: IAttributeValue;
   caAlias: string | undefined;
   selectedAvId: number | null;
+  index?: number;
 };
 
 export const Swatch = memo(function (props: ISwatchPropTypes) {
   const dispatch = useDispatch();
   const { luxService } = useLuxAPI();
-  const { av, caAlias, selectedAvId } = props;
+  const { av, caAlias, selectedAvId, index } = props;
 
   const imgClasses =
     `fc-swatch-wrapper--img ${av.id === selectedAvId ?
@@ -26,7 +27,7 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
   return (
     <>
       {
-        <li key={av.id}>
+        <li key={av.id || index}>
           <button
             type='button'
             className='fc-swatch'

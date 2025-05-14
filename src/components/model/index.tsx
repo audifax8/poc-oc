@@ -15,7 +15,8 @@ export function Model() {
   const dispatch = useDispatch();
   const name = useSelector((state: IState) => state?.product?.name);
   const { loaded } = useSelector((state: IState) => state?.rtr);
-  const avoidRTR = useSelector((state: IState) => state?.params?.avoidRTR);
+  //const avoidRTR = useSelector((state: IState) => state?.params?.avoidRTR);
+  const avoidRTR = true;
 
   const { luxService } = useLuxAPI();
   const { rtrService } = useRTR();
@@ -31,7 +32,7 @@ export function Model() {
   },
   [loaded, name]);
 
-  const skeletonImgPath = `/img/${isMobile ? 'mobile' : 'desktop'}.png`;
+  //const skeletonImgPath = `/img/${isMobile ? 'mobile' : 'desktop'}.png`;
 
   return (
     <section className='fc-model'>
@@ -40,25 +41,34 @@ export function Model() {
         className={`fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`}>
           {!name && !loaded && 
             <div className='fc-image-wrapper fc-skeleton'>
-              <img className='fc-skeleton' src={skeletonImgPath}/>
+              <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48' fill='none'></svg>
             </div>
           }
           {!name && loaded && 
             <div className='fc-image-wrapper fc-skeleton'>
-              <img className='fc-skeleton' src={skeletonImgPath}/>
+              <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48' fill='none'></svg>
             </div>
           }
           {name && !loaded &&
             <div className='fc-image-wrapper'>
-              <img className='' src={skeletonImgPath}/>
+              <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48' fill='none'></svg>
             </div>
           }
           {avoidRTR && 
             <div className='fc-image-wrapper'>
-              <img className='' src={skeletonImgPath}/>
+              <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48' fill='none'></svg>
             </div>
           }
       </div>
     </section>
   );
 };
+
+/*
+{avoidRTR && 
+            <div className='fc-image-wrapper'>
+              <img className='' src={skeletonImgPath}/>
+            </div>
+          }
+
+*/

@@ -70,7 +70,6 @@ export interface IMenuCA {
 };
 export interface IMenu {
   cas: IMenuCA[];
-  //[key: string]: IMenuCA;
 }
 export interface IState {
   core: ICore;

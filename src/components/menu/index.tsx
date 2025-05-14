@@ -29,10 +29,12 @@ export function Menu() {
           aria-label='configurable attributes menu'
         >
           {!loaded && menuCas && menuCas.length && (
-            menuCas.map((ca: ICAMap) => <AttributeHeader  caAlias={ca.alias} skeleton={true} />)
+            menuCas.map((ca: ICAMap, index: number) =>
+              <AttributeHeader  caAlias={ca.alias} skeleton={true} index={index}/>)
           )}
           {loaded && cas && cas.length &&
-            cas.map((ca: IMenuCA) => <AttributeHeader caAlias={ca.alias} />)
+            cas.map((ca: IMenuCA, index: number) =>
+              <AttributeHeader caAlias={ca.alias} index={index}/>)
           }
         </ul>
       </nav>
