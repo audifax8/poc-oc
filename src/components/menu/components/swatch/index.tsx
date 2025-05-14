@@ -31,9 +31,7 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
           <button
             type='button'
             className='fc-swatch'
-            onClick={() => {
-              return dispatch(updateSelectedAv({ avId: av.id, caAlias }));
-            }}
+            onClick={() => dispatch(updateSelectedAv({ avId: av.id, caAlias }))}
           >
             <div className='fc-swatch-wrapper'>
               <div className={imgClasses}>

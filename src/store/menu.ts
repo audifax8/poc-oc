@@ -4,7 +4,7 @@ import { IMenu, IMenuCA } from '../interfaces';
 export const menu = createSlice({
   name: 'menu',
   initialState: {
-    cas: {}
+    cas: []
   },
   reducers: {
     setCas: (state, action) => {
@@ -31,8 +31,23 @@ export const menu = createSlice({
     },
     setMenuOpen: (state, action) => {
       const { caAlias, open } = action.payload;
-      console.log({caAlias, open});
-      //state.cas = action.payload;
+      const oldCas = state.cas as IMenuCA[];
+      const newCas = oldCas.map((ca) => {
+        if (ca.alias === caAlias) {
+          const ne = {...ca, open};
+          console.log(ne);
+          return {
+            ...ca,
+            open,
+          };
+        }
+        const ne = {...ca};
+        console.log(ne);
+        return ne;
+      }) as never[];
+      console.log({caAlias, open, oldCas, newCas});
+      state.cas = newCas;
+      //state.cas = 
     },
     loadAVs: (state, action) => {
       const { caAlias } = action.payload;

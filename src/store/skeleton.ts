@@ -9,21 +9,24 @@ export const skeleton = createSlice({
         alias: 'frame_sku',
         icon: 'frame',
         selectedAvId: null,
-        skeleton: true
+        skeleton: true,
+        open: false
       },
       {
         id: 1,
         alias: 'lenses_sku',
         icon: 'lens',
         selectedAvId: null,
-        skeleton: true
+        skeleton: true,
+        open: false
       },    
       {
         id: 2,
         alias: 'temple_tips_sku',
         icon: 'temple',
         selectedAvId: null,
-        skeleton: true
+        skeleton: true,
+        open: false
       }
     ],
   },

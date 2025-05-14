@@ -56,7 +56,7 @@ export interface IUI {
 };
 
 export interface IMenuCA {
-  id: number | null;
+  id: number;
   alias: string;
   icon: string;
   ca?: IConfigurableAttribute | null;
