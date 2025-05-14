@@ -136,7 +136,7 @@ export class RBNService implements ILuxBase {
               ca: configurableAttibute,
               id: configurableAttibute.id,
               selectedAvId: av.id,
-              selectedAv: av,
+              selectedAvName: av.name,
               avsLenght,
               open: false,
               currentPage,
@@ -172,12 +172,23 @@ export class RBNService implements ILuxBase {
       ca: configurableAttibute,
       id: configurableAttibute.id,
       selectedAvId: av.id,
-      selectedAv: av,
+      selectedAvName: av.name,
       avsLenght,
       open,
       currentPage: updatedPage,
       skeleton: false,
       avsToRender
     } as IMenuCA;      
+  };
+
+  setRecipe(changes: any[]) {
+    return new Promise((resolve, reject) => {
+      return this.coreService.setRecipe(changes, (e: any, c: any) => {
+        if (e) {
+          return reject(e);
+        }
+        return resolve(c);
+      });
+    });
   }
 };

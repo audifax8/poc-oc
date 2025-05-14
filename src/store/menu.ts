@@ -11,12 +11,13 @@ export const menu = createSlice({
       state.cas = action.payload;
     },
     updateSelectedAv: (state, action) => {
-      const { caAlias, avId } = action.payload;
+      const { caAlias, avId, name } = action.payload;
       state.cas = state.cas.map((ca: IMenuCA) => {
         if (ca.alias === caAlias) {
           return {
             ...ca,
-            selectedAvId: avId
+            selectedAvId: avId,
+            selectedAvName: name
           };
         }
         return {

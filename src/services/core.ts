@@ -35,4 +35,10 @@ export class CoreService implements ICoreService {
     const ca = this.getAttribute({ alias });
     return ca.values.find((av: IAttributeValue) => av.selected) as IAttributeValue;
   };
+
+  setRecipe(changes: any[], cb: Function) {
+    this.configure.setRecipe(changes, (e: any, c: any) => {
+      return cb(e,c);
+    });
+  };
 }

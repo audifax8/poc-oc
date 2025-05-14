@@ -22,7 +22,18 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
   const imgClasses =
     `fc-swatch-wrapper--img ${av.id === selectedAvId ?
       'fc-swatch-wrapper--img--selected':
-      'fc-swatch-wrapper--img--border'}`
+      'fc-swatch-wrapper--img--border'}`;
+
+  const onClick = async () => {
+    try {
+      await luxService.setRecipe(
+        [{ ca: { alias: caAlias }, av: { id: av.id } }]
+      );
+      return dispatch(updateSelectedAv({ avId: av.id, caAlias, name: av.name }));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -31,7 +42,7 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
           <button
             type='button'
             className='fc-swatch'
-            onClick={() => dispatch(updateSelectedAv({ avId: av.id, caAlias }))}
+            onClick={onClick}
           >
             <div className='fc-swatch-wrapper'>
               <div className={imgClasses}>

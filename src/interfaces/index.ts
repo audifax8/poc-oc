@@ -61,7 +61,7 @@ export interface IMenuCA {
   icon: string;
   ca?: IConfigurableAttribute | null;
   selectedAvId: number | null;
-  selectedAv?: IAttributeValue | null;
+  selectedAvName: string;
   avsToRender: IAttributeValue[];
   open: boolean;
   avsLenght: number;
@@ -156,6 +156,7 @@ export interface ICoreService {
   getAttribute(options: any): IConfigurableAttribute;
   getAttributeByAlias(alias: string): IConfigurableAttribute;
   getSelectedAV(alias: string): IAttributeValue;
+  setRecipe(changes: any[], callback: Function): void;
 };
 
 export interface IProviderProps {

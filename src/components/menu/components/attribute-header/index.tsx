@@ -55,7 +55,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
               <span>{menuCa?.ca?.name}</span>
             </div>
             <div className={avClasses}>
-              <span>{menuCa?.selectedAv?.name}</span>
+              <span>{menuCa?.selectedAvName}</span>
             </div>
           </div>
           <div className={iconClasses}>
