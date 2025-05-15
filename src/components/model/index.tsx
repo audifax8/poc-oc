@@ -18,7 +18,6 @@ export function Model() {
   const { loaded, on } = useSelector((state: IState) => state?.rtr);
   const { token } = useSelector((state: IState) => state?.ui);
   const { params: { avoidRTR} } = useSelector((state: IState) => state?.fc);
-  console.log({avoidRTR});
   const [imgURL, setImgUrl] = useState<string>('');
 
   const { luxService } = useLuxAPI();

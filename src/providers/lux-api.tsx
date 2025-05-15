@@ -10,6 +10,8 @@ import { setParams } from '../store/params';
 import { IState, IProviderProps, ILuxBase } from '../interfaces';
 import { RBNService } from '../services/rbn';
 
+//import * as sampleComponents from './sample-components';
+
 const createCore = require('@cfg.plat/configure-core');
 
 const LuxAPIContext = createContext({});
@@ -66,11 +68,42 @@ export function LuxAPIProvider(props: IProviderProps) {
         const productGraph = await productGraphResponse.json();
         const preferences = await preferencesResponse.json();
         //const uiSettings = await uiSettingsResponse.json();
+        //console.log(sampleComponents);
 
         createCore(
           {
             productGraph,
             preferences,
+            productOverrides: {
+              // allows you to see on the console how overrides are being applied
+              // when using the non production version of the runtime
+              debug: false,
+              // if AVs that are set to {active:false} by valueUsage overrides below
+              // should still be displayed on the UI, but not selectable
+              // also you can use an object on this property to define what, not active
+              // ca's, you want to display:
+              //
+              // renderInactive: {
+              //   ca_alias : {true|false}
+              // }
+              //
+              //renderInactive: true, // default: false
+              //196886, dark gray classic
+              values: {
+                '1RB00500862L7_GRIDFK': {
+                  valueUsages: {
+                    '1RB00500862L7_GRIDFK': {
+                      upcharge: {
+                        us: 10,
+                        mx: 5,
+                        de: 8
+                      },
+                      active: false
+                    }
+                  }
+                },
+              }
+            },
             ...mergedParams,
           },
           (error: any, configureCore: any) => {

@@ -1,0 +1,1 @@
+export const product_0RB2140CP = require('./0RB2140CP');
