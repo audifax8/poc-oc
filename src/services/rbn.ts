@@ -91,6 +91,16 @@ export class RBNService implements ILuxBase {
     }
     return '';
   };
+
+  getProductImg(isMobile: boolean): string {
+    const conciseRecipe = this.coreService.getRecipe('legacyConcise');
+    const uriRecipe = encodeURI(conciseRecipe);
+    const { id, defaultViewName, environment, workflow, customerId } = this.coreService.getProduct();
+    const format = 'jpg';
+    const baseURL =
+      `//prod.fluidconfigure.com/imagecomposer/generate/?view=${defaultViewName}&apiKey=LUX-Ray-Ban-8taOhSR5AFyjt9tfxU&workflow=${workflow}&environment=${environment}&customerId=${customerId}&productId=${id}&purpose=serverDisplay&format=${format}&trim=false&padding=0&scale=${isMobile ? '0.2' : '0.75'}&binary=true&quality=91&backgroundColor=%23f6f6f6ff&recipe=${uriRecipe}`;
+    return baseURL;
+  };
   
   mapCas(): ICAMap[] {
     const mappedCAs = casToMap.map(
