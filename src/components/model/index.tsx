@@ -17,8 +17,8 @@ export function Model() {
   const { name } = useSelector((state: IState) => state?.product);
   const { loaded, on } = useSelector((state: IState) => state?.rtr);
   const { token } = useSelector((state: IState) => state?.ui);
-  //const avoidRTR = useSelector((state: IState) => state?.params?.avoidRTR);
-  const avoidRTR = true;
+  const { params: { avoidRTR} } = useSelector((state: IState) => state?.fc);
+  console.log({avoidRTR});
   const [imgURL, setImgUrl] = useState<string>('');
 
   const { luxService } = useLuxAPI();
@@ -47,9 +47,9 @@ export function Model() {
       }
     }
   },
-  [loaded, name, token]);
+  [loaded, name, token, avoidRTR]);
 
-  const skeletonImgPath = `/img/${isMobile ? 'mobile' : 'desktop'}.png`;
+  const skeletonImgPath = `/img/${isMobile ? 'mobilev2' : 'desktopv2'}.png`;
 
   return (
     <section className='fc-model'>

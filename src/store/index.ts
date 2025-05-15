@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import core from './core';
 import model from './model';
 import product from './product';
-import params from './params';
+import fc from './params';
 import rtr from './rtr';
 import rxc from './rxc';
 import vm from './vm';
@@ -15,7 +15,7 @@ export default configureStore({
     core,
     model,
     product,
-    params,
+    fc,
     rtr,
     rxc,
     vm,

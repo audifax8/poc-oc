@@ -20,51 +20,52 @@ export function useLuxAPI(): any {
 
 export function LuxAPIProvider(props: IProviderProps) {
   const dispatch = useDispatch();
-  const params = useSelector((state: IState) => state?.params);
+  const { params } = useSelector((state: IState) => state?.fc);
   const [queryParameters] = useSearchParams();
-  const queryWorkflow = queryParameters?.get('workflow');
-  const queryCustomer = queryParameters?.get('customer');
-  const queryProduct = queryParameters?.get('product');
-  const avoidRTR = queryParameters?.get('avoidRTR');
-  const queryBrand = queryParameters?.get('brand');
-  const mergedParams = {
-    ...params,
-    workflow: queryWorkflow || params.workflow,
-    customer: queryCustomer || params.customer,
-    customerId: queryCustomer || params.customer,
-    product: queryProduct || params.product,
-    productId: queryProduct || params.product,
-    brand: queryBrand || params.brand,
-    avoidRTR
-  };
-
   const { children } = props;
   const [luxService, setLuxService] = useState<ILuxBase>();
   useEffect(() => {
+    const queryWorkflow = queryParameters?.get('workflow');
+    const queryCustomer = queryParameters?.get('customer');
+    const queryProduct = queryParameters?.get('product');
+    const avoidRTR = queryParameters?.get('avoidRTR');
+    const queryBrand = queryParameters?.get('brand');
+    const mergedParams = {
+      ...params,
+      workflow: queryWorkflow || params.workflow,
+      customer: queryCustomer || params.customer,
+      customerId: queryCustomer || params.customer,
+      product: queryProduct || params.product,
+      productId: queryProduct || params.product,
+      brand: queryBrand || params.brand,
+      avoidRTR: avoidRTR === 'true' ? true : false
+    };
+
     const { workflow, product, customer, locale, brand } = mergedParams;
     const graphUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
     const preferencesUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/preferences.json`;
-    const uiSettings =
-      `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/ui-settings-${locale}.json`;
+    /*const uiSettings =
+      `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/ui-settings-${locale}.json`;*/
 
     Promise.all([
       fetch(graphUrl),
       fetch(preferencesUrl),
-      fetch(uiSettings)
+      //fetch(uiSettings)
     ])
     .then(async (
       [
         productGraphResponse,
         preferencesResponse,
-        uiSettingsResponse
+        //uiSettingsResponse
       ]
     ) => {
-      if (productGraphResponse.ok && preferencesResponse.ok && uiSettingsResponse.ok) {
+      //if (productGraphResponse.ok && preferencesResponse.ok && uiSettingsResponse.ok) {
+      if (productGraphResponse.ok && preferencesResponse.ok) {
         const productGraph = await productGraphResponse.json();
         const preferences = await preferencesResponse.json();
-        const uiSettings = await uiSettingsResponse.json();
+        //const uiSettings = await uiSettingsResponse.json();
 
         createCore(
           {

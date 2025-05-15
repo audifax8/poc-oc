@@ -74,7 +74,9 @@ export interface IMenu {
 }
 export interface IState {
   core: ICore;
-  params: IParams;
+  fc: {
+    params: IParams
+  };
   product: IProduct;
   rtr: ILuxApi;
   rxc: ILuxApi;
