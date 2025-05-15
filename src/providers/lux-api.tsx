@@ -9,6 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 import { setParams } from '../store/params';
 import { IState, IProviderProps, ILuxBase } from '../interfaces';
 import { RBNService } from '../services/rbn';
+import { RTR_ASSETS } from '../models/rtr-assets';
 
 //import * as sampleComponents from './sample-components';
 
@@ -117,6 +118,11 @@ export function LuxAPIProvider(props: IProviderProps) {
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
             dispatch(setParams(mergedParams));
+            const rtrAssets = new RTR_ASSETS(configureCore, mergedParams);
+            console.log(rtrAssets);
+            const url = rtrAssets.getAssetsURL();
+            console.log(url);
+            rtrAssets.prefetch(url);
             //TODO
             const test = _rbnService.mapCas2();
             dispatch(setCas(test));

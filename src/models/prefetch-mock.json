@@ -1,0 +1,33 @@
+{
+  "prefetchListStartup":[
+     "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/0RB4395CP54_LOD0/0RB4395CP54.glb",
+     "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/0RB4395CP54_LOD1/0RB4395CP54.glb"
+  ],
+  "prefetchListConfigurableAttributes":{
+     "TEMPLE":[
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/C_Rayban_GLTF.glb",
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/C_Rayban_Polarized_GLTF.glb",
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/C_RB_Chromance_VTO_GLTF.glb"
+     ],
+     "LENSES":[
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/Lens_0058C_GLTF.glb",
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/Lens_0060C_GLTF.glb",
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/Lens_0618C_GLTF.glb"
+     ],
+     "FRAME":[
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/D0001_GLTF.glb",
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/D0007_GLTF.glb",
+        "https://vto-custom-assets-qa-dev.s3.amazonaws.com/custom/0RB4395CP54/webGL/variants/D0008_GLTF.glb"
+     ]
+  },
+  "prefetchListHierarchy":{
+     "B2C.RB.APAC.KR":[
+        "https://rtr-viewer.luxottica.com/asset/font/RB-NONLATIN-BATANG.woff2",
+        "https://rtr-viewer.luxottica.com/asset/font/RB-NONLATIN-FANGSONG.woff2"
+     ],
+     "B2C.RB.APAC.JP":[
+        "https://rtr-viewer.luxottica.com/asset/font/RB-NONLATIN-MALGUN.woff2",
+        "https://rtr-viewer.luxottica.com/asset/font/RB-NONLATIN-MEIRYO.woff2"
+     ]
+  }
+}
