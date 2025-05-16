@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { RTRService } from '../services/rtr';
 import { setScriptLoaded, setEnabled } from '../store/rtr';
 import { IProviderProps, IRTRService } from '../interfaces';
+import { RTR_ASSETS } from '../models/rtr-assets';
 
 const RTRContext = createContext({});
 
@@ -14,6 +15,7 @@ export function RTRProvider(props: IProviderProps) {
   const dispatch = useDispatch();
   const { children } = props;
   const [rtrService, setRTRService] = useState<IRTRService>();
+  const [rtrAssets, setRTRAssets] = useState<RTR_ASSETS>();
 
   useEffect(() => {
     const scriptTag = document.createElement('script');
@@ -33,7 +35,7 @@ export function RTRProvider(props: IProviderProps) {
     document.body.appendChild(scriptTag);
   },[]);
   
-  const value = { rtrService };
+  const value = { rtrService, rtrAssets, setRTRAssets };
   return (
     <RTRContext.Provider value={value}>
       {children}

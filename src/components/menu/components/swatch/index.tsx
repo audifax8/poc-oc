@@ -49,7 +49,7 @@ export const Swatch = memo(function (props: ISwatchPropTypes) {
           >
             <div className='fc-swatch-wrapper'>
               <div className={imgClasses}>
-                <img src={luxService.getSwatchURL(av, caAlias)} alt={av.name}></img>
+                <img src={luxService?.getSwatchURL(av, caAlias)} alt={av.name}></img>
                 </div>
               <div className='fc-swatch-wrapper--name'>
                 <span>{av?.name}</span>

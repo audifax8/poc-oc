@@ -1,4 +1,19 @@
+import { preload } from 'react-dom';
 import prefecthMock from './prefetch-mock.json';
+
+const ALIAS_RTR_ON_COMPONENT_SELECT = {
+  lenses_sku: 'lenses',
+  polarized: 'lenses',
+  lenses_category: 'lenses',
+  prescription: 'lenses',
+  lenses_options: 'lenses',
+  frame_sku: 'frame',
+  metal_details: 'frame',
+  matrial: 'frame',
+  temple_sku: 'temple',
+  temple_tips_category: 'temple_tips',
+  temple_tips_sku: 'temple_tips'
+} as any;
 
 const getAssetsURL = (configure: any, params: any) => {
 
@@ -64,44 +79,30 @@ export class RTR_ASSETS {
 
   getAssetsURL = () => getAssetsURL(this.configure, this.params);
 
-  preloadAssets = (recipeChanges: any) => {
+  preloadAssets = (caAlias: string) => {
     if (this.preloadedData) {
       const { prefetchListConfigurableAttributes } = this.preloadedData;
+      const key = ALIAS_RTR_ON_COMPONENT_SELECT[caAlias] as string;
 
-      recipeChanges.find((change: any) => {
-        const { ca } = change;
-        if (!ca.vendorId) {
-          return;
-        }
-        const caVendorId = ca.vendorId.toUpperCase() as string;
-        const isAlreadyDonwloaded = this.assetsAlreadyPreloaded.find(
-          (name) => name === caVendorId
+      const isAlreadyDonwloaded =
+        this.assetsAlreadyPreloaded.find((name) => name === key);
+
+      if (isAlreadyDonwloaded) {
+        return;
+      }
+
+      this.assetsAlreadyPreloaded.push(key);
+      if (key && prefetchListConfigurableAttributes[key.toUpperCase()]) {
+        this.fetchAssets(
+          prefetchListConfigurableAttributes[key.toUpperCase()],
+          key
         );
-
-        if (isAlreadyDonwloaded) {
-          return;
-        }
-
-        this.assetsAlreadyPreloaded.push(caVendorId);
-        if (prefetchListConfigurableAttributes[caVendorId]) {
-          this.fetchAssets(
-            prefetchListConfigurableAttributes[caVendorId],
-            caVendorId
-          );
-        }
-      });
+      }
     }
   };
-  prefetch = (url: string) => {
-    const head = document.head;
-    const link = document.createElement('link');
 
-    link.rel = 'prefetch';
-    link.href = url;
-    link.crossOrigin = 'anonymous';
+  prefetch = (url: string) => preload(url, {as: 'fetch', crossOrigin: 'anonymous'});
 
-    head.appendChild(link);
-  };
   fetchAssets = (assets: any[], type: string) => {
     if (assets && assets.length) {
       this.debugLog(`downloading assets: ${type}`);
@@ -179,31 +180,38 @@ export class RTR_ASSETS {
     if (skipPreloadAssets) {
       return;
     }
+
+    const modelAssets = 'prefetchListStartup';
+    const isAlreadyDonwloaded =
+      this.assetsAlreadyPreloaded
+        .find((name) => name === modelAssets);
+
+    if (isAlreadyDonwloaded) {
+      return;
+    }
+
+    const preloadModelAssets = () => {
+      const { prefetchListStartup } = this.preloadedData;
+      this.fetchAssets(prefetchListStartup, modelAssets);
+      this.assetsAlreadyPreloaded.push(modelAssets);
+      const ocHierarchy = this.params.ocHierarchy;
+      const prefetchListHierarchy = this.preloadedData.prefetchListHierarchy;
+      if (ocHierarchy && prefetchListHierarchy) {
+        this.fetchAssets(
+          prefetchListHierarchy[ocHierarchy],
+          'prefetchListHierarchy'
+        );
+        this.assetsAlreadyPreloaded.push('prefetchListHierarchy');
+      }
+    };
+
+    if (this.preloadedData) {
+      return preloadModelAssets();
+    }
+
     const { result } = await this.waitForScriptToLoad(100, 20000) as any;
     if (result) {
-      const modelAssets = 'prefetchListStartup';
-      const isAlreadyDonwloaded = this.assetsAlreadyPreloaded.find(
-        (name) => name === modelAssets
-      );
-
-      if (isAlreadyDonwloaded) {
-        return;
-      }
-
-      if (this.preloadedData) {
-        const { prefetchListStartup } = this.preloadedData;
-        this.fetchAssets(prefetchListStartup, modelAssets);
-        this.assetsAlreadyPreloaded.push(modelAssets);
-        const ocHierarchy = this.params.ocHierarchy;
-        const prefetchListHierarchy = this.preloadedData.prefetchListHierarchy;
-        if (ocHierarchy && prefetchListHierarchy) {
-          this.fetchAssets(
-            prefetchListHierarchy[ocHierarchy],
-            'prefetchListHierarchy'
-          );
-          this.assetsAlreadyPreloaded.push('prefetchListHierarchy');
-        }
-      }
+      return preloadModelAssets();
     }
   };
 }

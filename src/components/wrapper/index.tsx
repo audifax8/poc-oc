@@ -5,6 +5,7 @@ import './index.scss';
 import { RBNHeader } from '../rbn-header';
 import { Header } from '../header';
 import { Model } from '../model';
+//import Model2 from '../suspense-model';
 import { Menu } from '../menu';
 import { Footer } from '../footer';
 import { useSelector } from 'react-redux';

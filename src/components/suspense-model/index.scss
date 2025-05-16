@@ -1,0 +1,39 @@
+.fc-model {
+  height: 78vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & .fc-rtr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  & .fc-rtr-on {
+    display: unset;
+  }
+
+  & .fc-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 31rem;
+    padding: 3.1rem;
+
+    @media (max-width: 700px) { 
+      padding: unset;
+    }
+
+    & img {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 700px) { 
+    height: 80vh;
+  }
+}

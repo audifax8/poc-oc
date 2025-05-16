@@ -1,5 +1,13 @@
 import { IRTRService } from '../interfaces';
 
+interface KeyValueString {
+  [key: string]: string;
+};
+
+interface KeyValueNumber {
+  [key: string]: number;
+};
+
 export class RTRService implements IRTRService {
   /* Lux rtr API */
   api: any;
@@ -82,5 +90,37 @@ export class RTRService implements IRTRService {
       }
     };
     this.api.init(initData);
-  }
+  };
+
+  selectComponent(componentId: number): void {
+    this.api.selectComponent({ componentId });
+  };
+
+  mapCaNameToRTRCameraName(caAlias: string): string {
+    const ALIAS_RTR_ON_COMPONENT_SELECT: KeyValueString = {
+      lenses_sku: 'lenses',
+      polarized: 'lenses',
+      lenses_category: 'lenses',
+      prescription: 'lenses',
+      lenses_options: 'lenses',
+      frame_sku: 'frame',
+      metal_details: 'frame',
+      matrial: 'frame',
+      temple_sku: 'temple',
+      temple_tips_category: 'temple_tips',
+      temple_tips_sku: 'temple_tips'
+    };
+    return ALIAS_RTR_ON_COMPONENT_SELECT[caAlias];
+  };
+
+  mapCameraNameRTRToComponent(caAlias: string): number {
+    const aliasMapped = this.mapCaNameToRTRCameraName(caAlias);
+    const COMPONENTS_TOKEN_MAP: KeyValueNumber = {
+      'frame': 0,
+      'temple': 1,
+      'temple_tips': 2,
+      'lenses': 3
+    } as any;
+    return COMPONENTS_TOKEN_MAP[aliasMapped];
+  };
 }

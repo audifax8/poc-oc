@@ -1,15 +1,23 @@
 import React from 'react';
-import { useEffect, createContext, useState, useContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
+import { preload } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
+import { setProduct } from '../store/product';
+import { setModelAssetsPreloaded } from '../store/rtr';
+import { updateToken } from '../store/ui';
 import { setLoaded } from '../store/core';
 import { setCas } from '../store/menu';
-import { CoreService } from '../services/core';
-import { setProduct } from '../store/product';
-import { useSearchParams } from 'react-router-dom';
 import { setParams } from '../store/params';
+
 import { IState, IProviderProps, ILuxBase } from '../interfaces';
+
+import { CoreService } from '../services/core';
 import { RBNService } from '../services/rbn';
+
 import { RTR_ASSETS } from '../models/rtr-assets';
+import { useRTR } from './rtr';
 
 //import * as sampleComponents from './sample-components';
 
@@ -23,6 +31,7 @@ export function useLuxAPI(): any {
 
 export function LuxAPIProvider(props: IProviderProps) {
   const dispatch = useDispatch();
+  const { setRTRAssets } = useRTR();
   const { params } = useSelector((state: IState) => state?.fc);
   const [queryParameters] = useSearchParams();
   const { children } = props;
@@ -32,6 +41,7 @@ export function LuxAPIProvider(props: IProviderProps) {
     const queryCustomer = queryParameters?.get('customer');
     const queryProduct = queryParameters?.get('product');
     const avoidRTR = queryParameters?.get('avoidRTR');
+    const mockPreloadAssets = queryParameters?.get('mockPreloadAssets');
     const queryBrand = queryParameters?.get('brand');
     const mergedParams = {
       ...params,
@@ -41,7 +51,8 @@ export function LuxAPIProvider(props: IProviderProps) {
       product: queryProduct || params.product,
       productId: queryProduct || params.product,
       brand: queryBrand || params.brand,
-      avoidRTR: avoidRTR === 'true' ? true : false
+      avoidRTR: avoidRTR === 'true' ? true : false,
+      mockPreloadAssets: mockPreloadAssets === 'true' ? true : false
     };
 
     const { workflow, product, customer, locale, brand } = mergedParams;
@@ -112,21 +123,28 @@ export function LuxAPIProvider(props: IProviderProps) {
               console.error(error);
               return;
             }
+            const rtrAssets = new RTR_ASSETS(configureCore, mergedParams);
+            const url = rtrAssets.getAssetsURL();
+            preload(url, {as: 'fetch', crossOrigin: 'anonymous'});
+            rtrAssets.downloadAssets();
+
             const _cService = new CoreService(configureCore);
             const _rbnService = new RBNService(_cService);
+            const token = _rbnService.getToken();
+            dispatch(updateToken(token));
+
             const product = _cService.getProduct();
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
             dispatch(setParams(mergedParams));
-            const rtrAssets = new RTR_ASSETS(configureCore, mergedParams);
-            console.log(rtrAssets);
-            const url = rtrAssets.getAssetsURL();
-            console.log(url);
-            rtrAssets.prefetch(url);
+            //rtrAssets.prefetch(url);
             //TODO
             const test = _rbnService.mapCas2();
             dispatch(setCas(test));
             setLuxService(_rbnService);
+            rtrAssets.preloadStartupAssets();
+            dispatch(setModelAssetsPreloaded(true));
+            setRTRAssets(rtrAssets);
           }
         );
       }

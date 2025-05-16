@@ -8,7 +8,8 @@ export const rtrSlice = createSlice({
     loaded: false,
     enabled: false,
     on: false,
-    camera: null
+    camera: null,
+    modelAssetsPreloaded: false
   },
   reducers: {
     setPatch: (state, action) => {
@@ -29,11 +30,21 @@ export const rtrSlice = createSlice({
     },
     setCamera: (state, action) => {
       state.camera = action.payload;
+    },
+    setModelAssetsPreloaded: (state, action) => {
+      state.modelAssetsPreloaded = action.payload;
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setScriptLoaded, setEnabled, setOn, setPatch, setCamera } = rtrSlice.actions;
+export const {
+  setModelAssetsPreloaded,
+  setScriptLoaded,
+  setEnabled,
+  setOn,
+  setPatch,
+  setCamera
+} = rtrSlice.actions;
 
 export default rtrSlice.reducer;

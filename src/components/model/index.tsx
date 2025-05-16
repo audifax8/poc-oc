@@ -1,52 +1,39 @@
-import React, { useState } from 'react';
-
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isMobile } from 'react-device-detect';
 
-import { useEffect } from 'react';
-import { useLuxAPI } from '../../providers/lux-api';
-import { ILuxApi, ILuxBase, IState } from '../../interfaces';
 import { useRTR } from '../../providers/rtr';
 import { setOn } from '../../store/rtr';
-import { updateToken } from '../../store/ui';
+
+import { IState } from '../../interfaces';
 
 import './index.scss';
 
 export function Model() {
   const dispatch = useDispatch();
-  const { name } = useSelector((state: IState) => state?.product);
-  const { loaded, on } = useSelector((state: IState) => state?.rtr);
-  const { token } = useSelector((state: IState) => state?.ui);
-  const { params: { avoidRTR} } = useSelector((state: IState) => state?.fc);
-  const [imgURL, setImgUrl] = useState<string>('');
-
-  const { luxService } = useLuxAPI();
   const { rtrService } = useRTR();
+  const { loaded, on, modelAssetsPreloaded, camera } = useSelector((state: IState) => state?.rtr);
+  const { params: { avoidRTR} } = useSelector((state: IState) => state?.fc);
+  const { name } = useSelector((state: IState) => state?.product);
+  const { token } = useSelector((state: IState) => state?.ui);
 
   useEffect(() => {
-    let newToken;
-    if (luxService) {
-      newToken = luxService.getToken();
-      dispatch(updateToken(newToken));
+    if (rtrService && loaded && modelAssetsPreloaded && !on && !avoidRTR) {
+      rtrService.init(token);
+      dispatch(setOn(true));
     }
-
-    if (name && loaded && luxService && !on) {
-      const url = luxService.getProductImg(isMobile);
-      setImgUrl(url);
-      if (!avoidRTR && rtrService) {
-        rtrService.init(newToken);
-        dispatch(setOn(true));
-      }
-    }
-
-    if (on && token !== null) {
+    if (rtrService && loaded && modelAssetsPreloaded && on && !avoidRTR) {
       const isValidToken = rtrService.isIdAvailable(token);
       if (isValidToken) {
         rtrService.setId(token);
       }
+      if (camera) {
+        const componentToToken = rtrService.mapCameraNameRTRToComponent(camera);
+        rtrService.selectComponent(componentToToken);
+      }
     }
   },
-  [loaded, name, token, avoidRTR]);
+  [token, avoidRTR, modelAssetsPreloaded, camera]);
 
   const skeletonImgPath = `/img/${isMobile ? 'mobilev2' : 'desktopv2'}.png`;
 
@@ -55,14 +42,14 @@ export function Model() {
       <div
         id='viewer'
         className={`fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`}>
-          {!name && !loaded && !imgURL &&
+          {!modelAssetsPreloaded && !loaded &&
             <div className='fc-image-wrapper'>
               <img className='' src={skeletonImgPath} alt='product skeleton'/>
             </div>
           }
-          {avoidRTR && name && imgURL &&
+          {avoidRTR && name &&
             <div className='fc-image-wrapper'>
-              <img className='' src={imgURL} alt='product'/>
+              <img className='' src={skeletonImgPath} alt='product skeleton'/>
             </div>
           }
       </div>

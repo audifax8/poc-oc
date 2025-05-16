@@ -27,6 +27,7 @@ export interface IParams {
   locale: string;
   brand: string;
   avoidRTR: boolean;
+  mockPreloadAssets: boolean;
 };
 export interface ICore {
   loaded: boolean;
@@ -43,6 +44,8 @@ export interface ILuxApi {
   loaded: boolean;
   enabled: boolean;
   on: boolean;
+  camera: string;
+  modelAssetsPreloaded: boolean;
 };
 export interface ISkeleton {
   menuCas: any[];
@@ -179,6 +182,9 @@ export interface IRTRService {
   init(token: string): void;
   isIdAvailable(token: string): any;
   setId(token: string): void;
+  selectComponent(token: number): void;
+  mapCameraNameRTRToComponent(caName: string): number;
+  mapCaNameToRTRCameraName(caAlias: string): string;
 };
 
 export interface IVMMVService {

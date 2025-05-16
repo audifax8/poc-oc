@@ -1,12 +1,18 @@
 import React from 'react';
 import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { IMenuCA, IState } from '../../../../interfaces';
+
 import { AttributeHeaderDivider } from '../attribute-header-divider';
 import { Swatch } from '../swatch';
 import { ViewMore } from '../view-more';
+
 import { setMenuOpen, loadAVs } from '../../../../store/menu';
+import { setCamera } from '../../../../store/rtr';
+
 import { useLuxAPI } from '../../../../providers/lux-api';
+import { useRTR } from '../../../../providers/rtr';
+
+import { IMenuCA, IState } from '../../../../interfaces';
 
 import './index.scss';
 
@@ -19,8 +25,12 @@ export interface IAttributeHeaderPropTypes {
 export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
   const dispatch = useDispatch();
   const { luxService } = useLuxAPI();
+  const { rtrAssets } = useRTR();
   const { caAlias, skeleton, index } = props;
+
   const menuCa = useSelector((state: IState) => state.menu.cas.find(ca => ca.alias === caAlias)) as IMenuCA;
+  const { camera } = useSelector((state: IState) => state.rtr);
+  
   const liId = menuCa?.id || index;
 
   const imgClasses = `fc-attribute-header--info--image ${skeleton ? 'fc-skeleton': ''}`;
@@ -33,6 +43,15 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
     dispatch(loadAVs({ caAlias, newData }));
   };
 
+  const openMenu = () => {
+    if (skeleton) { return; }
+    if (camera !== caAlias) {
+      dispatch(setCamera(caAlias));
+    }
+    dispatch(setMenuOpen({ open: !menuCa?.open, caAlias }));
+    rtrAssets.preloadAssets(caAlias);
+  };
+
   return (
     <li key={liId}>
       <h3 className='fc-attribute-header'>
@@ -42,7 +61,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
           aria-controls='sect1'
           id='accordion1id'
           className='fc-attribute-header-button'
-          onClick={() => dispatch(setMenuOpen({ open: !menuCa?.open, caAlias }))}
+          onClick={openMenu}
         >
           <div className='fc-attribute-header--info'>
             <div className={imgClasses}>
