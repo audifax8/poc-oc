@@ -18,15 +18,15 @@ function App() {
       <BrowserRouter>
         <Provider store={store}>
           <PreloadScripts></PreloadScripts>
-          <RTRProvider>
-            <LuxAPIProvider>
-              <RXCProvider>
-                <VMProvider>
-                  <Wrapper />
-                </VMProvider>
-              </RXCProvider>
-            </LuxAPIProvider>
-          </RTRProvider>  
+            <RTRProvider>
+              <LuxAPIProvider>
+                <RXCProvider>
+                  <VMProvider>
+                    <Wrapper />
+                  </VMProvider>
+                </RXCProvider>
+              </LuxAPIProvider>
+            </RTRProvider>
         </Provider>
       </BrowserRouter>
     </div>

@@ -30,6 +30,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
 
   const menuCa = useSelector((state: IState) => state.menu.cas.find(ca => ca.alias === caAlias)) as IMenuCA;
   const { camera } = useSelector((state: IState) => state.rtr);
+  const { params: { avoidLuxAPI } } = useSelector((state: IState) => state?.fc);
   
   const liId = menuCa?.id || index;
 
@@ -49,7 +50,9 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
       dispatch(setCamera(caAlias));
     }
     dispatch(setMenuOpen({ open: !menuCa?.open, caAlias }));
-    rtrAssets.preloadAssets(caAlias);
+    if (!avoidLuxAPI) {
+      rtrAssets.preloadAssets(caAlias);
+    }
   };
 
   return (
@@ -67,7 +70,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
             <div className={imgClasses}>
             {skeleton ?
               <svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48' fill='none'></svg> :
-              <img src={`/img/${menuCa?.icon}.png`} alt={menuCa?.icon} width={48} height={48} aria-hidden={true}/>
+              <img src={`/img/${menuCa?.icon}.webp`} alt={menuCa?.icon} width={48} height={48} aria-hidden={true}/>
             }
             </div>
             <div className={caClasses}>

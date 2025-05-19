@@ -41,7 +41,9 @@ export function LuxAPIProvider(props: IProviderProps) {
     const queryCustomer = queryParameters?.get('customer');
     const queryProduct = queryParameters?.get('product');
     const avoidRTR = queryParameters?.get('avoidRTR');
+    const queryMvoidLuxAPI = queryParameters?.get('avoidLuxAPI')
     const mockPreloadAssets = queryParameters?.get('mockPreloadAssets');
+    const fluidEnv = queryParameters?.get('fluidEnv');
     const queryBrand = queryParameters?.get('brand');
     const mergedParams = {
       ...params,
@@ -52,10 +54,12 @@ export function LuxAPIProvider(props: IProviderProps) {
       productId: queryProduct || params.product,
       brand: queryBrand || params.brand,
       avoidRTR: avoidRTR === 'true' ? true : false,
+      avoidLuxAPI: queryMvoidLuxAPI === 'true' ? true: false,
+      fluidEnv: fluidEnv === 'true' ? true: false,
       mockPreloadAssets: mockPreloadAssets === 'true' ? true : false
     };
 
-    const { workflow, product, customer, locale, brand } = mergedParams;
+    const { workflow, product, customer, locale, avoidLuxAPI } = mergedParams;
     const graphUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
     const preferencesUrl =
@@ -124,9 +128,15 @@ export function LuxAPIProvider(props: IProviderProps) {
               return;
             }
             const rtrAssets = new RTR_ASSETS(configureCore, mergedParams);
-            const url = rtrAssets.getAssetsURL();
-            preload(url, {as: 'fetch', crossOrigin: 'anonymous'});
-            rtrAssets.downloadAssets();
+            if (avoidLuxAPI) {
+              if (fluidEnv) {
+                console.log('Avoid preloading RTR Assets by param avoidLuxAPI');
+              }
+            } else {
+              const url = rtrAssets.getAssetsURL();
+              preload(url, {as: 'fetch', crossOrigin: 'anonymous'});
+              rtrAssets.downloadAssets();
+            }
 
             const _cService = new CoreService(configureCore);
             const _rbnService = new RBNService(_cService);
@@ -137,13 +147,18 @@ export function LuxAPIProvider(props: IProviderProps) {
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
             dispatch(setParams(mergedParams));
-            //rtrAssets.prefetch(url);
             //TODO
             const test = _rbnService.mapCas2();
             dispatch(setCas(test));
             setLuxService(_rbnService);
-            rtrAssets.preloadStartupAssets();
-            dispatch(setModelAssetsPreloaded(true));
+            if (avoidLuxAPI) {
+              if (fluidEnv) {
+                console.log('Avoid preloading Startup Assets RTR Assets by param avoidLuxAPI');
+              }
+            } else {
+              rtrAssets.preloadStartupAssets();
+              dispatch(setModelAssetsPreloaded(true));
+            }
             setRTRAssets(rtrAssets);
           }
         );

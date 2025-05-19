@@ -33,21 +33,16 @@ export function Model() {
       }
     }
   },
-  [token, avoidRTR, modelAssetsPreloaded, camera]);
+  [token, avoidRTR, modelAssetsPreloaded, camera, loaded]);
 
-  const skeletonImgPath = `/img/${isMobile ? 'mobilev2' : 'desktopv2'}.png`;
+  const skeletonImgPath = `/img/${isMobile ? 'mobilev2w' : 'desktopv2w'}.webp`;
 
   return (
     <section className='fc-model'>
       <div
         id='viewer'
         className={`fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`}>
-          {!modelAssetsPreloaded && !loaded &&
-            <div className='fc-image-wrapper'>
-              <img className='' src={skeletonImgPath} alt='product skeleton'/>
-            </div>
-          }
-          {avoidRTR && name &&
+          {(avoidRTR && name) &&
             <div className='fc-image-wrapper'>
               <img className='' src={skeletonImgPath} alt='product skeleton'/>
             </div>
@@ -56,3 +51,14 @@ export function Model() {
     </section>
   );
 };
+
+/*
+
+{(!modelAssetsPreloaded && !loaded) && (avoidRTR && name) &&
+            <div className='fc-image-wrapper'>
+              <img className='' src={skeletonImgPath} alt='product skeleton'/>
+            </div>
+          }
+
+*/
+

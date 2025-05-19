@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { IProviderProps, IRXCService } from '../interfaces';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { IProviderProps, IRXCService, IState } from '../interfaces';
 import { RXCService } from '../services/rxc';
 import { setPatch } from '../store/rxc';
 
@@ -13,13 +14,28 @@ export function RXCProvider(props: IProviderProps) {
   const dispatch = useDispatch();
   const { children } = props;
   const [rxcService, setRxcService] = useState<IRXCService>();
+  const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
 
   useEffect(() => {
+    if (avoidLuxAPI || avoidLuxAPI === undefined) {
+      if (fluidEnv) {
+        console.log(`RXC: Not loaded by param avoidLuxAPI`);
+      }
+      dispatch(setPatch({
+        loaded: false,
+        loading: false,
+        failed: false,
+        enabled: false
+      }));
+      return;
+    }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//rxc.luxottica.com/rxc3/fe/test/v1.1.4/dist/rxc.js';
     scriptTag.addEventListener('load', () => {
       if (window.RXC && window.RXC_LOADED) {
-        console.log(`RXC: script loaded`);
+        if (fluidEnv) {
+          console.log(`RXC: API Success`);
+        }
         const newState = {
           loading: false,
           failed: false,
@@ -30,7 +46,9 @@ export function RXCProvider(props: IProviderProps) {
         const _rxcService = new RXCService(window.RXC);
         setRxcService(_rxcService);
       } else {
-        console.log(`RXC: Error loading script`);
+        if (fluidEnv) {
+          console.log(`RXC: Error loading script`);
+        }
         const newState = {
           loading: false,
           failed: true,
@@ -41,8 +59,10 @@ export function RXCProvider(props: IProviderProps) {
       }
     });
     scriptTag.addEventListener('error', (e: any) => {
-      console.log(`RXC: Error loading script`);
-      console.log(e);
+      if (fluidEnv) {
+        console.log(`RXC: Error loading script`);
+        console.log(e);
+      }
       const newState = {
         loading: false,
         failed: true,
@@ -52,7 +72,7 @@ export function RXCProvider(props: IProviderProps) {
       dispatch(setPatch(newState));
     });
     document.body.appendChild(scriptTag);
-  },[]);
+  },[avoidLuxAPI]);
   
   const value = { rxcService };
   return (

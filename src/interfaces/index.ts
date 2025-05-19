@@ -27,6 +27,8 @@ export interface IParams {
   locale: string;
   brand: string;
   avoidRTR: boolean;
+  avoidLuxAPI: boolean;
+  fluidEnv: boolean;
   mockPreloadAssets: boolean;
 };
 export interface ICore {

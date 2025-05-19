@@ -1,9 +1,10 @@
 import React from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { RTRService } from '../services/rtr';
-import { setScriptLoaded, setEnabled } from '../store/rtr';
-import { IProviderProps, IRTRService } from '../interfaces';
+import { setPatch } from '../store/rtr';
+import { IProviderProps, IRTRService, IState } from '../interfaces';
 import { RTR_ASSETS } from '../models/rtr-assets';
 
 const RTRContext = createContext({});
@@ -16,24 +17,62 @@ export function RTRProvider(props: IProviderProps) {
   const { children } = props;
   const [rtrService, setRTRService] = useState<IRTRService>();
   const [rtrAssets, setRTRAssets] = useState<RTR_ASSETS>();
+  const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
 
   useEffect(() => {
+    if (avoidLuxAPI || avoidLuxAPI === undefined) {
+      if (fluidEnv) {
+        console.log(`RTR: Not loaded by param avoidLuxAPI`);
+      }
+      dispatch(setPatch({
+        loaded: false,
+        loading: false,
+        failed: false,
+        enabled: false
+      }));
+      return;
+    }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//rtrmv.essilorluxottica.com/lib/v/3.0.3/main.umd.js';
     scriptTag.addEventListener('load', () => {
+      if (!window.rtrViewerMV && fluidEnv) {
+        console.log(`RTR: Error loading script`);
+        const newState = {
+          loading: false,
+          failed: true,
+          loaded: false,
+          enabled: false
+        };
+        dispatch(setPatch(newState));
+        return;
+      }
+      
+      console.log(`RTR: Success`);
       const _rtrService = new RTRService(window.rtrViewerMV);
       setRTRService(_rtrService);
-      dispatch(setScriptLoaded(true));
-      dispatch(setEnabled(true));
+      dispatch(setPatch({
+        loaded: true,
+        loading: false,
+        failed: false,
+        enabled: true
+      }));
+      return;
     });
-    scriptTag.addEventListener('error', () => {
-      console.log('error');
-    });
-    scriptTag.addEventListener('fail', () => {
-      console.log('fail');
+    scriptTag.addEventListener('error', (e) => {
+      if (fluidEnv) {
+        console.log(`RTR: Error loading script`);
+        console.log(e);
+      }
+      dispatch(setPatch({
+        loaded: false,
+        loading: false,
+        failed: true,
+        enabled: false
+      }));
+      return;
     });
     document.body.appendChild(scriptTag);
-  },[]);
+  },[avoidLuxAPI]);
   
   const value = { rtrService, rtrAssets, setRTRAssets };
   return (

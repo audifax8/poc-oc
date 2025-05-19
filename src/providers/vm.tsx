@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { IProviderProps, IVMMVService } from '../interfaces';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { IProviderProps, IState, IVMMVService } from '../interfaces';
 import { VMMVService } from '../services/vm';
 import { setPatch } from '../store/vm';
 
@@ -13,13 +14,28 @@ export function VMProvider(props: IProviderProps) {
   const dispatch = useDispatch();
   const { children } = props;
   const [vmService, setVmService] = useState<IVMMVService>();
+  const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
 
   useEffect(() => {
+    if (avoidLuxAPI || avoidLuxAPI === undefined) {
+      if (fluidEnv) {
+        console.log(`VM: Not loaded by param avoidLuxAPI`);
+      }
+      dispatch(setPatch({
+        loaded: false,
+        loading: false,
+        failed: false,
+        enabled: false
+      }));
+      return;
+    }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//vmmv.luxottica.com/v/4.13/index.umd.js';
     scriptTag.addEventListener('load', () => {
       if (window.vmmv) {
-        console.log(`VM: script loaded`);
+        if (fluidEnv) {
+          console.log(`VM: script loaded`);
+        }
         const newState = {
           loading: false,
           failed: false,
@@ -29,11 +45,24 @@ export function VMProvider(props: IProviderProps) {
         dispatch(setPatch(newState));
         const _vmService = new VMMVService(window.vmmv);
         setVmService(_vmService);
+      } else {
+        if (fluidEnv) {
+          console.log(`RTR: Error loading script`);
+        }
+        const newState = {
+          loading: false,
+          failed: true,
+          loaded: false,
+          enabled: false
+        };
+        dispatch(setPatch(newState));
       }
     });
     scriptTag.addEventListener('error', (e: any) => {
-      console.log(`VM: Error loading script`);
-      console.log(e);
+      if (fluidEnv) {
+        console.log(`VM: Error loading script`);
+        console.log(e);
+      }
       const newState = {
         loading: false,
         failed: true,
@@ -43,7 +72,7 @@ export function VMProvider(props: IProviderProps) {
       dispatch(setPatch(newState));
     });
     document.body.appendChild(scriptTag);
-  },[]);
+  },[avoidLuxAPI]);
   
   const value = { vmService, setVmService };
   return (
