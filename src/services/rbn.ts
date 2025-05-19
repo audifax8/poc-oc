@@ -101,33 +101,8 @@ export class RBNService implements ILuxBase {
       `//prod.fluidconfigure.com/imagecomposer/generate/?view=${defaultViewName}&apiKey=LUX-Ray-Ban-8taOhSR5AFyjt9tfxU&workflow=${workflow}&environment=${environment}&customerId=${customerId}&productId=${id}&purpose=serverDisplay&format=${format}&trim=false&padding=0&scale=${isMobile ? '0.2' : '0.75'}&binary=true&quality=91&backgroundColor=%23f6f6f6ff&recipe=${uriRecipe}`;
     return baseURL;
   };
-  
-  mapCas(): ICAMap[] {
-    const mappedCAs = casToMap.map(
-      (ca: ICAMap) => {
-        const { alias } = ca;
-        try {
-          const configurableAttibute = this.coreService.getAttributeByAlias(alias);
-          const av = this.coreService.getSelectedAV(alias);
-          if (configurableAttibute) {
-            return {
-              ...ca,
-              ca: configurableAttibute,
-              id: configurableAttibute.id,
-              selectedAvId: av.id,
-              selectedAv: av
-            };
-          }
-        } catch (e) {
-          return undefined;
-        }
-      }
-    ) as ICAMap[];
-    const sanitizedCas = mappedCAs.filter((ca: ICAMap) => ca);
-    return sanitizedCas;
-  };
 
-  mapCas2(): IMenuCA[] {
+  mapCas(): IMenuCA[] {
     const mappedCAs = casToMap.map(
       (ca: ICAMap) => {
         const { alias } = ca;

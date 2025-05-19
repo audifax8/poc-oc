@@ -6,7 +6,7 @@ export const rxcSlice = createSlice({
     loading: true,
     failed: false,
     loaded: false,
-    enabled: false,
+    enabled: true,
     on: false
   },
   reducers: {

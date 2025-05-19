@@ -31,6 +31,7 @@ export const PreloadScripts = () => {
 
   useEffect(() => {
     preconnect('//cdn-prod.fluidconfigure.com');
+    preconnect('//prod.fluidconfigure.com');
     const { workflow, product, customer, locale, avoidLuxAPI, fluidEnv } = mergedParams;
     const graphUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;

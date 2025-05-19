@@ -14,6 +14,8 @@ export function Footer() {
   const coreLoaded = useSelector((state: IState) => state?.core?.loaded);
   const { menuOpen } = useSelector((state: IState) => state?.ui);
   const { loaded, enabled, loading, failed } = useSelector((state: IState) => state?.rxc);
+  //TODO
+  //console.log({loading, loaded});
   const { rxcService } = useRXC();
   const onRXCClick = async () => {
     if (loaded && enabled) {
@@ -27,7 +29,7 @@ export function Footer() {
     <section className='fc-footer'>
       <div className='fc-footer-actions'>
         <div className='fc-footer--rxc'>
-          {!failed &&
+          {enabled &&
             (<Button
               label='try lenses'
               icon={

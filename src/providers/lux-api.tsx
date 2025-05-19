@@ -147,9 +147,7 @@ export function LuxAPIProvider(props: IProviderProps) {
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
             dispatch(setParams(mergedParams));
-            //TODO
-            const test = _rbnService.mapCas2();
-            dispatch(setCas(test));
+            dispatch(setCas(_rbnService.mapCas()));
             setLuxService(_rbnService);
             if (avoidLuxAPI) {
               if (fluidEnv) {

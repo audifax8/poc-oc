@@ -11,7 +11,7 @@ import { ICAMap, IMenuCA, IState } from '../../interfaces';
  * https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/
 */
 export function Menu() {
-  const loaded = useSelector((state: IState) => state?.core?.loaded);
+  const { loaded } = useSelector((state: IState) => state?.core);
   const { menuCas } = useSelector((state: IState) => state?.skeleton);
   const { cas } = useSelector((state: IState) => state?.menu);
   
@@ -28,16 +28,20 @@ export function Menu() {
           className='fc-accordion-list'
           aria-label='configurable attributes menu'
         >
-          {!loaded && menuCas && menuCas.length && (
-            menuCas.map((ca: ICAMap, index: number) =>
-              <AttributeHeader  caAlias={ca.alias} skeleton={true} index={index}/>)
+          {!loaded && menuCas && menuCas.length && 
+            menuCas.map((ca: ICAMap, index: number) => 
+              (<li key={ca.id || index}>
+                <AttributeHeader  caAlias={ca.alias} skeleton={true} mockCA={ca} />
+              </li>)
           )}
           {loaded && cas && cas.length &&
             cas.map((ca: IMenuCA, index: number) =>
-              <AttributeHeader caAlias={ca.alias} index={index}/>)
-          }
+              (<li key={ca.id || index}>
+                <AttributeHeader caAlias={ca.alias} />
+              </li>)
+          )}
         </ul>
       </nav>
     </section>
   );
-}
+};

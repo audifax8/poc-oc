@@ -20,17 +20,17 @@ export function RTRProvider(props: IProviderProps) {
   const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
 
   useEffect(() => {
-    if (avoidLuxAPI || avoidLuxAPI === undefined) {
-      if (fluidEnv) {
+    if (avoidLuxAPI !== undefined) {
+      if (avoidLuxAPI === true && fluidEnv) {
         console.log(`RTR: Not loaded by param avoidLuxAPI`);
+        dispatch(setPatch({
+          loaded: false,
+          loading: false,
+          failed: false,
+          enabled: false
+        }));
+        return;
       }
-      dispatch(setPatch({
-        loaded: false,
-        loading: false,
-        failed: false,
-        enabled: false
-      }));
-      return;
     }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//rtrmv.essilorluxottica.com/lib/v/3.0.3/main.umd.js';
@@ -46,8 +46,9 @@ export function RTRProvider(props: IProviderProps) {
         dispatch(setPatch(newState));
         return;
       }
-      
-      console.log(`RTR: Success`);
+      if (fluidEnv) {
+        console.log(`RTR: Script loaded`);
+      }
       const _rtrService = new RTRService(window.rtrViewerMV);
       setRTRService(_rtrService);
       dispatch(setPatch({

@@ -19,20 +19,18 @@ import './index.scss';
 export interface IAttributeHeaderPropTypes {
   caAlias: string;
   skeleton?: boolean;
-  index?: number;
+  mockCA?: any;
 };
 
 export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
   const dispatch = useDispatch();
   const { luxService } = useLuxAPI();
   const { rtrAssets } = useRTR();
-  const { caAlias, skeleton, index } = props;
+  const { caAlias, skeleton, mockCA } = props;
 
-  const menuCa = useSelector((state: IState) => state.menu.cas.find(ca => ca.alias === caAlias)) as IMenuCA;
+  const menuCa = useSelector((state: IState) => state.menu.cas.find(ca => ca.alias === caAlias)) as IMenuCA || mockCA;
   const { camera } = useSelector((state: IState) => state.rtr);
   const { params: { avoidLuxAPI } } = useSelector((state: IState) => state?.fc);
-  
-  const liId = menuCa?.id || index;
 
   const imgClasses = `fc-attribute-header--info--image ${skeleton ? 'fc-skeleton': ''}`;
   const caClasses = `fc-attribute-header--info--ca-name ${skeleton ? 'fc-skeleton fc-skeleton-text': ''}`;
@@ -56,7 +54,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
   };
 
   return (
-    <li key={liId}>
+    <>
       <h3 className='fc-attribute-header'>
         <button
           type='button'
@@ -131,6 +129,6 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
         </ul>
       )}
       <AttributeHeaderDivider />
-    </li>
+    </>
   );
 });

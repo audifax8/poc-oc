@@ -17,38 +17,23 @@ export function RXCProvider(props: IProviderProps) {
   const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
 
   useEffect(() => {
-    if (avoidLuxAPI || avoidLuxAPI === undefined) {
-      if (fluidEnv) {
+    if (avoidLuxAPI !== undefined) {
+      if (avoidLuxAPI === true && fluidEnv) {
         console.log(`RXC: Not loaded by param avoidLuxAPI`);
+        dispatch(setPatch({
+          loaded: false,
+          loading: false,
+          failed: false,
+          enabled: false
+        }));
+        return;
       }
-      dispatch(setPatch({
-        loaded: false,
-        loading: false,
-        failed: false,
-        enabled: false
-      }));
-      return;
     }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//rxc.luxottica.com/rxc3/fe/test/v1.1.4/dist/rxc.js';
     scriptTag.addEventListener('load', () => {
-      if (window.RXC && window.RXC_LOADED) {
-        if (fluidEnv) {
-          console.log(`RXC: API Success`);
-        }
-        const newState = {
-          loading: false,
-          failed: false,
-          loaded: true,
-          enabled: true
-        };
-        dispatch(setPatch(newState));
-        const _rxcService = new RXCService(window.RXC);
-        setRxcService(_rxcService);
-      } else {
-        if (fluidEnv) {
-          console.log(`RXC: Error loading script`);
-        }
+      if (!window.RXC_LOADED && fluidEnv) {
+        console.log(`RXC: Error loading script`);
         const newState = {
           loading: false,
           failed: true,
@@ -56,7 +41,19 @@ export function RXCProvider(props: IProviderProps) {
           enabled: false
         };
         dispatch(setPatch(newState));
+        return;
       }
+      if (fluidEnv) {
+        console.log(`RXC: script loaded`);
+      }
+      const newState = {
+        loading: false,
+        failed: false,
+        loaded: true,
+        enabled: true
+      };
+      dispatch(setPatch(newState));
+      return;
     });
     scriptTag.addEventListener('error', (e: any) => {
       if (fluidEnv) {

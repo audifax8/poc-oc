@@ -26,7 +26,7 @@ export function Header() {
         {name && <span className=''>{name}</span>}
         {!name && <div className='fc-skeleton-text fc-skeleton'></div>}
       </div>
-      {!failed &&
+      {enabled &&
         <div className='fc-header--vm'>
           <Button
             label='try on'

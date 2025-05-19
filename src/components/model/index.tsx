@@ -8,12 +8,14 @@ import { setOn } from '../../store/rtr';
 import { IState } from '../../interfaces';
 
 import './index.scss';
+import { useLuxAPI } from '../../providers/lux-api';
 
 export function Model() {
   const dispatch = useDispatch();
   const { rtrService } = useRTR();
+  const { luxService } = useLuxAPI();
   const { loaded, on, modelAssetsPreloaded, camera } = useSelector((state: IState) => state?.rtr);
-  const { params: { avoidRTR} } = useSelector((state: IState) => state?.fc);
+  const { params: { avoidRTR } } = useSelector((state: IState) => state?.fc);
   const { name } = useSelector((state: IState) => state?.product);
   const { token } = useSelector((state: IState) => state?.ui);
 
@@ -44,21 +46,14 @@ export function Model() {
         className={`fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`}>
           {(avoidRTR && name) &&
             <div className='fc-image-wrapper'>
-              <img className='' src={skeletonImgPath} alt='product skeleton'/>
+              <img
+                className=''
+                src={name ? luxService.getProductImg(isMobile) : skeletonImgPath}
+                alt='product skeleton'
+              />
             </div>
           }
       </div>
     </section>
   );
 };
-
-/*
-
-{(!modelAssetsPreloaded && !loaded) && (avoidRTR && name) &&
-            <div className='fc-image-wrapper'>
-              <img className='' src={skeletonImgPath} alt='product skeleton'/>
-            </div>
-          }
-
-*/
-

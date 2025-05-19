@@ -17,38 +17,23 @@ export function VMProvider(props: IProviderProps) {
   const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
 
   useEffect(() => {
-    if (avoidLuxAPI || avoidLuxAPI === undefined) {
-      if (fluidEnv) {
+    if (avoidLuxAPI !== undefined) {
+      if (avoidLuxAPI === true && fluidEnv) {
         console.log(`VM: Not loaded by param avoidLuxAPI`);
+        dispatch(setPatch({
+          loaded: false,
+          loading: false,
+          failed: false,
+          enabled: false
+        }));
+        return;
       }
-      dispatch(setPatch({
-        loaded: false,
-        loading: false,
-        failed: false,
-        enabled: false
-      }));
-      return;
     }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//vmmv.luxottica.com/v/4.13/index.umd.js';
     scriptTag.addEventListener('load', () => {
-      if (window.vmmv) {
-        if (fluidEnv) {
-          console.log(`VM: script loaded`);
-        }
-        const newState = {
-          loading: false,
-          failed: false,
-          loaded: true,
-          enabled: true
-        };
-        dispatch(setPatch(newState));
-        const _vmService = new VMMVService(window.vmmv);
-        setVmService(_vmService);
-      } else {
-        if (fluidEnv) {
-          console.log(`RTR: Error loading script`);
-        }
+      if (!window.vmmv && fluidEnv) {
+        console.log(`VM: Error loading script`);
         const newState = {
           loading: false,
           failed: true,
@@ -56,7 +41,20 @@ export function VMProvider(props: IProviderProps) {
           enabled: false
         };
         dispatch(setPatch(newState));
+        return;
       }
+      if (fluidEnv) {
+        console.log(`VM: script loaded`);
+      }
+      const newState = {
+        loading: false,
+        failed: false,
+        loaded: true,
+        enabled: true
+      };
+      dispatch(setPatch(newState));
+      const _vmService = new VMMVService(window.vmmv);
+      setVmService(_vmService);
     });
     scriptTag.addEventListener('error', (e: any) => {
       if (fluidEnv) {
