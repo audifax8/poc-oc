@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { preload } from 'react-dom';
+import { preload, preconnect } from 'react-dom';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { IState } from '../interfaces';
@@ -30,6 +30,7 @@ export const PreloadScripts = () => {
   const { vendorId, currency } = product;
 
   useEffect(() => {
+    preconnect('//cdn-prod.fluidconfigure.com');
     const { workflow, product, customer, locale, avoidLuxAPI, fluidEnv } = mergedParams;
     const graphUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
