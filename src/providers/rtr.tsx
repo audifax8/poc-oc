@@ -35,8 +35,10 @@ export function RTRProvider(props: IProviderProps) {
     const scriptTag = document.createElement('script');
     scriptTag.src = '//rtrmv.essilorluxottica.com/lib/v/3.0.3/main.umd.js';
     scriptTag.addEventListener('load', () => {
-      if (!window.rtrViewerMV && fluidEnv) {
-        console.log(`RTR: Error loading script`);
+      if (!window.rtrViewerMV) {
+        if (fluidEnv) {
+          console.log(`RTR: Error loading script`);
+        }
         const newState = {
           loading: false,
           failed: true,

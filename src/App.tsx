@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 
 import { PreloadScripts } from './hooks/preload';
 import { LuxAPIProvider } from './providers/lux-api';
@@ -15,20 +14,18 @@ import './App.scss';
 function App() {
   return (
     <div className='fc-app'>
-      <BrowserRouter>
-        <Provider store={store}>
-          <PreloadScripts></PreloadScripts>
-            <RTRProvider>
-              <LuxAPIProvider>
-                <RXCProvider>
-                  <VMProvider>
-                    <Wrapper />
-                  </VMProvider>
-                </RXCProvider>
-              </LuxAPIProvider>
-            </RTRProvider>
-        </Provider>
-      </BrowserRouter>
+      <Provider store={store}>
+        <PreloadScripts></PreloadScripts>
+          <RTRProvider>
+            <LuxAPIProvider>
+              <RXCProvider>
+                <VMProvider>
+                  <Wrapper />
+                </VMProvider>
+              </RXCProvider>
+            </LuxAPIProvider>
+          </RTRProvider>
+      </Provider>
     </div>
   );
 }

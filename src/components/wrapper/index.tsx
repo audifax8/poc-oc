@@ -1,15 +1,14 @@
 import React from 'react';
-
-import './index.scss';
+import { useSelector } from 'react-redux';
 
 import { RBNHeader } from '../rbn-header';
 import { Header } from '../header';
 import { Model } from '../model';
-//import Model2 from '../suspense-model';
 import { Menu } from '../menu';
 import { Footer } from '../footer';
-import { useSelector } from 'react-redux';
 import { IState } from '../../interfaces';
+
+import './index.scss';
 
 export function Wrapper() {
   const { darkMode, menuOpen } = useSelector((state: IState) => state?.ui);

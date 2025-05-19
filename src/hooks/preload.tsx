@@ -1,38 +1,18 @@
 import { useEffect } from 'react';
 import { preload, preconnect } from 'react-dom';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import { IState } from '../interfaces';
 
 export const PreloadScripts = () => {
   const { params } = useSelector((state: IState) => state?.fc);
   const product = useSelector((state: IState) => state?.product);
-  const [queryParameters] = useSearchParams();
-  const queryWorkflow = queryParameters?.get('workflow');
-  const queryCustomer = queryParameters?.get('customer');
-  const queryProduct = queryParameters?.get('product');
-  const queryAvoidLuxApi = queryParameters?.get('avoidLuxAPI');
-  const queryFluidEnv = queryParameters?.get('fluidEnv');
-
-  const mergedParams = {
-    ...params,
-    workflow: queryWorkflow || params.workflow,
-    customer: queryCustomer || params.customer,
-    customerId: queryCustomer || params.customer,
-    product: queryProduct || params.product,
-    productId: queryProduct || params.product,
-    locale: queryProduct || params.locale,
-    avoidLuxAPI: queryAvoidLuxApi === 'true' ? true: false || params.avoidLuxAPI,
-    fluidEnv: queryFluidEnv === 'true' ? true: false || params.fluidEnv,
-    queryFluidEnv
-  };
 
   const { vendorId, currency } = product;
 
   useEffect(() => {
     preconnect('//cdn-prod.fluidconfigure.com');
     preconnect('//prod.fluidconfigure.com');
-    const { workflow, product, customer, locale, avoidLuxAPI, fluidEnv } = mergedParams;
+    const { workflow, product, customer, locale, avoidLuxAPI, fluidEnv } = params;
     const graphUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
     const preferencesUrl =

@@ -32,8 +32,10 @@ export function VMProvider(props: IProviderProps) {
     const scriptTag = document.createElement('script');
     scriptTag.src = '//vmmv.luxottica.com/v/4.13/index.umd.js';
     scriptTag.addEventListener('load', () => {
-      if (!window.vmmv && fluidEnv) {
-        console.log(`VM: Error loading script`);
+      if (!window.vmmv) {
+        if (fluidEnv) {
+          console.log(`VM: Error loading script`);
+        }
         const newState = {
           loading: false,
           failed: true,

@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect, createContext, useContext } from 'react';
 import { preload } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 
 import { setProduct } from '../store/product';
 import { setModelAssetsPreloaded } from '../store/rtr';
@@ -33,33 +32,10 @@ export function LuxAPIProvider(props: IProviderProps) {
   const dispatch = useDispatch();
   const { setRTRAssets } = useRTR();
   const { params } = useSelector((state: IState) => state?.fc);
-  const [queryParameters] = useSearchParams();
   const { children } = props;
   const [luxService, setLuxService] = useState<ILuxBase>();
   useEffect(() => {
-    const queryWorkflow = queryParameters?.get('workflow');
-    const queryCustomer = queryParameters?.get('customer');
-    const queryProduct = queryParameters?.get('product');
-    const avoidRTR = queryParameters?.get('avoidRTR');
-    const queryMvoidLuxAPI = queryParameters?.get('avoidLuxAPI')
-    const mockPreloadAssets = queryParameters?.get('mockPreloadAssets');
-    const fluidEnv = queryParameters?.get('fluidEnv');
-    const queryBrand = queryParameters?.get('brand');
-    const mergedParams = {
-      ...params,
-      workflow: queryWorkflow || params.workflow,
-      customer: queryCustomer || params.customer,
-      customerId: queryCustomer || params.customer,
-      product: queryProduct || params.product,
-      productId: queryProduct || params.product,
-      brand: queryBrand || params.brand,
-      avoidRTR: avoidRTR === 'true' ? true : false,
-      avoidLuxAPI: queryMvoidLuxAPI === 'true' ? true: false,
-      fluidEnv: fluidEnv === 'true' ? true: false,
-      mockPreloadAssets: mockPreloadAssets === 'true' ? true : false
-    };
-
-    const { workflow, product, customer, locale, avoidLuxAPI } = mergedParams;
+    const { workflow, product, customer, locale, avoidLuxAPI, fluidEnv } = params;
     const graphUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
     const preferencesUrl =
@@ -120,14 +96,14 @@ export function LuxAPIProvider(props: IProviderProps) {
                 },
               }
             },
-            ...mergedParams,
+            ...params,
           },
           (error: any, configureCore: any) => {
             if (error) {
               console.error(error);
               return;
             }
-            const rtrAssets = new RTR_ASSETS(configureCore, mergedParams);
+            const rtrAssets = new RTR_ASSETS(configureCore, params);
             if (avoidLuxAPI) {
               if (fluidEnv) {
                 console.log('Avoid preloading RTR Assets by param avoidLuxAPI');
@@ -146,7 +122,7 @@ export function LuxAPIProvider(props: IProviderProps) {
             const product = _cService.getProduct();
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
-            dispatch(setParams(mergedParams));
+            dispatch(setParams(params));
             dispatch(setCas(_rbnService.mapCas()));
             setLuxService(_rbnService);
             if (avoidLuxAPI) {
