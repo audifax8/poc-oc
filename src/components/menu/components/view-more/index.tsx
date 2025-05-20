@@ -9,7 +9,7 @@ interface IViewMoreProps {
 };
 
 export const ViewMore = (props: IViewMoreProps) => {
-  const { remainingItems, label, onClickCallback, skeleton } = props;
+  const { remainingItems, label, onClickCallback } = props;
 
   const onClick = (e: React.MouseEvent) => {
     if (onClickCallback) {
@@ -24,21 +24,19 @@ export const ViewMore = (props: IViewMoreProps) => {
       'fc-swatch-wrapper--img--border'}`
 
   return (
-    <li key={11}>
-      <button
-        type='button'
-        className='fc-swatch'
-        onClick={onClick}
-      >
-        <div className='fc-swatch-wrapper'>
-          <div className={imgClasses}>
-            {`+ ${remainingItems}`}
-            </div>
-          <div className='fc-swatch-wrapper--name'>
-            <span>{label}</span>
+    <button
+      type='button'
+      className='fc-swatch'
+      onClick={onClick}
+    >
+      <div className='fc-swatch-wrapper'>
+        <div className={imgClasses}>
+          {`+ ${remainingItems}`}
           </div>
+        <div className='fc-swatch-wrapper--name'>
+          <span>{label}</span>
         </div>
-      </button>
-    </li>
+      </div>
+    </button>
   );
 };

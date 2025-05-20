@@ -115,16 +115,20 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
         >
           {menuCa?.avsToRender && menuCa?.avsToRender.length && (
             menuCa?.avsToRender.map(
-              (av, index) =>
-                <Swatch av={av} caAlias={menuCa?.ca?.alias} selectedAvId={menuCa?.selectedAvId} index={index}/>
+              (av, index) => 
+                <li key={av.id || index}>
+                  <Swatch av={av} caAlias={menuCa?.ca?.alias} selectedAvId={menuCa?.selectedAvId} index={index}/>
+                </li>
             )
           )}
           {menuCa?.currentPage < menuCa?.avsLenght &&
-            <ViewMore
-              remainingItems={menuCa?.avsLenght - menuCa?.currentPage}
-              label='view more'
-              onClickCallback={onViewMoreClick}
-            />
+            <li key={menuCa?.avsToRender.length}>
+              <ViewMore
+                remainingItems={menuCa?.avsLenght - menuCa?.currentPage}
+                label='view more'
+                onClickCallback={onViewMoreClick}
+              />
+            </li>
           }
         </ul>
       )}
