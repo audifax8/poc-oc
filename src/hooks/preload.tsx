@@ -13,6 +13,13 @@ export const PreloadScripts = () => {
     preconnect('//cdn-prod.fluidconfigure.com');
     preconnect('//prod.fluidconfigure.com');
     const { workflow, product, customer, locale, avoidLuxAPI, fluidEnv } = params;
+    if (!avoidLuxAPI) {
+      if (fluidEnv) {
+        console.log('Adding preconnect for Luxottica APIs');
+      }
+      preconnect('//vmmv.luxottica.com');
+      preconnect('//rtrmv.essilorluxottica.com');
+    }
     const graphUrl =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
     const preferencesUrl =
