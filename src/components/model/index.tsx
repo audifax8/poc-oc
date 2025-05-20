@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { isMobile } from 'react-device-detect';
 
 import { useRTR } from '../../providers/rtr';
+import { useLuxAPI } from '../../providers/lux-api';
 import { setOn } from '../../store/rtr';
 
 import { IState } from '../../interfaces';
 
 import './index.scss';
-import { useLuxAPI } from '../../providers/lux-api';
 
 export function Model() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export function Model() {
   const [isImageLoaded, setIsImageLoaded] = useState('');
 
   useEffect(() => {
-    if (luxService && avoidRTR) {
+    if (luxService && avoidRTR && name) {
       const url = luxService.getProductImg(isMobile);
       fetch(url)
         .then(() => setIsImageLoaded(url))
@@ -48,18 +48,20 @@ export function Model() {
   },
   [token, avoidRTR, modelAssetsPreloaded, camera, loaded]);
 
+  const imgClasses = `fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`;
+
   const skeletonImgPath = `/img/${isMobile ? 'mobilev2w' : 'desktopv2w'}.webp`;
 
   return (
     <section className='fc-model'>
       <div
         id='viewer'
-        className={`fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`}>
-          {(avoidRTR && name) &&
+        className={imgClasses}>
+          {avoidRTR &&
             <div className='fc-image-wrapper'>
               {
                 <img
-                  className=''
+                  className={`${isImageLoaded ? '' : 'fc-skeleton'}`}
                   src={isImageLoaded ? isImageLoaded : skeletonImgPath}
                   alt='product skeleton'
                   fetchPriority='high'
@@ -71,5 +73,3 @@ export function Model() {
     </section>
   );
 };
-
-//src={name ? luxService.getProductImg(isMobile) : skeletonImgPath}

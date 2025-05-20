@@ -1,7 +1,7 @@
 @import '../../styles/config.scss';
 
 .fc-wrapper {
-  //background-image: url('../../../public/img/light-backgroung-desktopw.webp');
+  background-image: url('../../../public/img/light-backgroung-desktopw.webp');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -15,7 +15,7 @@
 
 
   @media (max-width: 700px) {
-    //background-image: url('../../../public/img/light-backgroung-mobilew.webp');
+    background-image: url('../../../public/img/light-backgroung-mobilew.webp');
     grid-template-columns: 1fr;
     grid-template-areas: 
       'rbn-header'
