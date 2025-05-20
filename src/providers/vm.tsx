@@ -31,6 +31,7 @@ export function VMProvider(props: IProviderProps) {
     }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//vmmv.luxottica.com/v/4.13/index.umd.js';
+    scriptTag.async = true;
     scriptTag.addEventListener('load', () => {
       if (!window.vmmv) {
         if (fluidEnv) {

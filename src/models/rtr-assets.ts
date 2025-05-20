@@ -101,7 +101,10 @@ export class RTR_ASSETS {
     }
   };
 
-  prefetch = (url: string) => preload(url, {as: 'fetch', crossOrigin: 'anonymous'});
+  prefetch = (url: string) => preload(
+    url,
+    { as: 'fetch', crossOrigin: 'anonymous' }
+  );
 
   fetchAssets = (assets: any[], type: string) => {
     if (assets && assets.length) {

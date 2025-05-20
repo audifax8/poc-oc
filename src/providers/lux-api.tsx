@@ -110,7 +110,10 @@ export function LuxAPIProvider(props: IProviderProps) {
               }
             } else {
               const url = rtrAssets.getAssetsURL();
-              preload(url, {as: 'fetch', crossOrigin: 'anonymous'});
+              preload(
+                url,
+                { as: 'fetch', crossOrigin: 'anonymous' }
+              );
               rtrAssets.downloadAssets();
             }
 

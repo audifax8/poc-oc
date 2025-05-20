@@ -20,8 +20,14 @@ export const PreloadScripts = () => {
     /*const uiSettings =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/ui-settings-${locale}.json`;*/
 
-    preload(graphUrl, {as: 'fetch', crossOrigin: 'anonymous'});
-    preload(preferencesUrl, {as: 'fetch', crossOrigin: 'anonymous'});
+    preload(
+      graphUrl,
+      { as: 'fetch', crossOrigin: 'anonymous', fetchPriority: 'high' }
+    );
+    preload(
+      preferencesUrl,
+      { as: 'fetch', crossOrigin: 'anonymous', fetchPriority: 'high' }
+    );
     //preload(uiSettings, {as: 'fetch', crossOrigin: 'anonymous'});
 
     if (fluidEnv && avoidLuxAPI) {
@@ -29,9 +35,18 @@ export const PreloadScripts = () => {
     }
 
     if (!avoidLuxAPI) {
-      preload('//rtrmv.essilorluxottica.com/lib/v/3.0.3/main.umd.js', {as: 'script', crossOrigin: 'anonymous'});
-      preload('//vmmv.luxottica.com/v/4.13/index.umd.js', {as: 'script', crossOrigin: 'anonymous'});
-      preload('//rxc.luxottica.com/rxc3/fe/test/v1.1.3/dist/rxc.js', {as: 'script', crossOrigin: 'anonymous'});
+      preload(
+        '//rtrmv.essilorluxottica.com/lib/v/3.0.3/main.umd.js',
+        { as: 'script', crossOrigin: 'anonymous', fetchPriority: 'high' }
+      );
+      preload(
+        '//vmmv.luxottica.com/v/4.13/index.umd.js',
+        { as: 'script', crossOrigin: 'anonymous', fetchPriority: 'low' }
+      );
+      preload(
+        '//rxc.luxottica.com/rxc3/fe/test/v1.1.3/dist/rxc.js',
+        { as: 'script', crossOrigin: 'anonymous', fetchPriority: 'low' }
+      );
     }
     if (vendorId && currency) {
       preload(`//one-configurator-services-mockup.luxdeepblue.com/components?vendorId=${vendorId}&currency=${currency}`, {as: 'fetch', crossOrigin: 'anonymous'});

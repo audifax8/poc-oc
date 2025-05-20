@@ -31,6 +31,7 @@ export function RXCProvider(props: IProviderProps) {
     }
     const scriptTag = document.createElement('script');
     scriptTag.src = '//rxc.luxottica.com/rxc3/fe/test/v1.1.4/dist/rxc.js';
+    scriptTag.async = true;
     scriptTag.addEventListener('load', () => {
       if (!window.RXC_LOADED) {
         if (fluidEnv) {

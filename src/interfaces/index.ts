@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-
 declare global {
   interface Window {
     rtrViewerMV: any;
