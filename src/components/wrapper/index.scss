@@ -1,6 +1,8 @@
 @import '../../styles/config.scss';
 
 .fc-wrapper {
+  background-color: $grey-f6;
+  background: $grey-f6;
   &.fc-show-background {
     background-image: url('../../../public/img/light-backgroung-desktopw.webp');
   }
