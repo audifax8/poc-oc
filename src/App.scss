@@ -10,6 +10,7 @@
   width: 7em;
   height: .5em;
   border-radius: .2rem;
+  font-family: $font-lato;
 }
 
 .fc-skeleton-button {
@@ -20,10 +21,12 @@
 @keyframes skeleton-loader {
   0% {
     background-color: $skeleton-0;
+    font-family: $font-lato;
   }
 
   100% {
     background-color: $skeleton-100;
+    font-family: $font-lato;
   }
 }
 /* end Skeleton */

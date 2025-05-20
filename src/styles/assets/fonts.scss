@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Oswald-Medium';
+  src: url('./Oswald-Medium.woff2') format('woff2'),
+    url('./Oswald-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato-Regular';
+  src: url('./Lato-Regular.woff2') format('woff2'),
+    url('./Lato-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato-Bold';
+  src: url('./Lato-Bold.woff2') format('woff2'),
+    url('./Lato-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato-Italic';
+  src: url('./Lato-Italic.woff2') format('woff2'),
+    url('./Lato-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}

@@ -13,8 +13,19 @@ const {
   avoidLuxAPI,
   avoidRTR,
   mockPreloadAssets,
-  fluidEnv
+  fluidEnv,
+  showBackgroundImg
 } = queryParams;
+
+const parseBoolParam = (paramToParse: string | undefined) => {
+  if (paramToParse === undefined) {
+    return false;
+  }
+  if (paramToParse === '') {
+    return true;
+  }
+  return paramToParse === 'true' ? true : false;
+};
 
 export const paramsSlice = createSlice({
   name: 'fc',
@@ -35,10 +46,11 @@ export const paramsSlice = createSlice({
       apiKey: 'LUX-Ray-Ban-8taOhSR5AFyjt9tfxU',
       locale: 'en_US',
       brand: 'rbn',
-      fluidEnv: fluidEnv === 'true' ? true : false,
-      avoidLuxAPI: avoidLuxAPI === 'true' ? true : false,
-      avoidRTR: avoidRTR === 'true' ? true : false,
-      mockPreloadAssets: mockPreloadAssets === 'true' ? true : false
+      fluidEnv: parseBoolParam(fluidEnv),
+      avoidLuxAPI: parseBoolParam(avoidLuxAPI),
+      avoidRTR: parseBoolParam(avoidRTR),
+      mockPreloadAssets: parseBoolParam(mockPreloadAssets),
+      showBackgroundImg: parseBoolParam(showBackgroundImg)
     }
   },
   reducers: {

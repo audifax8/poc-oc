@@ -16,7 +16,7 @@
 
   & .fc-header--name {
     color: $black-1f;
-    font-family: Oswald;
+    font-family: $font-oswald-medium;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 500;
@@ -35,6 +35,14 @@
 
     & .fc-skeleton-text {
       width: 11rem;
+    }
+  }
+
+  .fc-header--vm {
+    & .fc-button {
+      &--label {
+        font-family: $font-oswald-medium;
+      }
     }
   }
 }

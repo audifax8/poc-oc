@@ -18,22 +18,17 @@ export const ViewMore = (props: IViewMoreProps) => {
     return e;
   };
 
-  const imgClasses =
-    `fc-swatch-wrapper--img ${false ?
-      'fc-swatch-wrapper--img--selected':
-      'fc-swatch-wrapper--img--border'}`
-
   return (
     <button
       type='button'
-      className='fc-swatch'
+      className='fc-view-more'
       onClick={onClick}
     >
-      <div className='fc-swatch-wrapper'>
-        <div className={imgClasses}>
+      <div className='fc-view-more--wrapper'>
+        <div className='fc-view-more--wrapper--amount'>
           {`+ ${remainingItems}`}
           </div>
-        <div className='fc-swatch-wrapper--name'>
+        <div className='fc-view-more--wrapper--name'>
           <span>{label}</span>
         </div>
       </div>

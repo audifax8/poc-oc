@@ -12,8 +12,10 @@ import './index.scss';
 
 export function Wrapper() {
   const { darkMode, menuOpen } = useSelector((state: IState) => state?.ui);
+  const { showBackgroundImg } = useSelector((state: IState) => state?.fc?.params);
 
-  const classes = `fc-wrapper ${darkMode ? 'fc-dark-mode' : ''} ${menuOpen ? 'fc-menu-open': ''}`;
+  const classes =
+    `fc-wrapper ${darkMode ? 'fc-dark-mode' : ''} ${menuOpen ? 'fc-menu-open': ''} ${showBackgroundImg ? 'fc-show-background' : ''}`;
   return (
     <div className={classes}>
       <RBNHeader />

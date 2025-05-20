@@ -29,6 +29,7 @@ export interface IParams {
   avoidLuxAPI: boolean;
   fluidEnv: boolean;
   mockPreloadAssets: boolean;
+  showBackgroundImg: boolean;
 };
 export interface ICore {
   loaded: boolean;

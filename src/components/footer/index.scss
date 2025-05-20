@@ -61,6 +61,7 @@
         gap: 8px;
         border-radius: 48px;
         background: $black-1f;
+        font-family: $font-lato;
       }
     }
   }
@@ -70,6 +71,15 @@
       border-radius: 1px;
       background: $red;
       border-color: $red;
+
+      &--label {
+        font-family: $font-oswald-medium;
+        font-size: 0.8;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 160%; /* 22.4px */
+        text-transform: uppercase;
+      }
     }
   }
 
@@ -82,20 +92,22 @@
 
     & .fc-footer-final-price {
       color: $red;
-      font-size: 16px;
+      font-size: 24px;
       font-style: normal;
       font-weight: 500;
       line-height: 160%; /* 25.6px */
       text-transform: uppercase;
+      font-family: $font-oswald-medium;
     }
 
     & .fc-footer-total-price {
       color: $grey-66;
-      font-size: 14px;
+      font-size: 20px;
       font-style: normal;
-      font-weight: 400;
+      font-weight: 500;
       line-height: 160%; /* 22.4px */
       text-decoration-line: line-through;
+      font-family: $font-oswald-medium;
     }
 
     & .fc-footer-discount-price {
@@ -116,6 +128,7 @@
       font-weight: 700;
       line-height: 160%; /* 19.2px */
       text-transform: uppercase;
+      font-family: $font-lato;
     }
   }
 }

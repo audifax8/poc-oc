@@ -34,7 +34,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
 
   const imgClasses = `fc-attribute-header--info--image ${skeleton ? 'fc-skeleton': ''}`;
   const caClasses = `fc-attribute-header--info--ca-name ${skeleton ? 'fc-skeleton fc-skeleton-text': ''}`;
-  const avClasses = `fc-attribute-header--info--ca-name ${skeleton ? 'fc-skeleton fc-skeleton-text': ''}`;
+  const avClasses = `fc-attribute-header--info--av-name ${skeleton ? 'fc-skeleton fc-skeleton-text': ''}`;
   const iconClasses = `fc-attribute-header--icon--image ${skeleton ? 'fc-skeleton': ''}`;
 
   const onViewMoreClick = () => {
@@ -72,10 +72,10 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
             }
             </div>
             <div className={caClasses}>
-              <span>{menuCa?.ca?.name}</span>
+              {!skeleton && <span>{menuCa?.ca?.name}</span>}
             </div>
             <div className={avClasses}>
-              <span>{menuCa?.selectedAvName}</span>
+              {!skeleton && <span>{menuCa?.selectedAvName}</span>}
             </div>
           </div>
           <div className={iconClasses}>
