@@ -19,6 +19,7 @@ export function Model() {
   const { name } = useSelector((state: IState) => state?.product);
   const { token } = useSelector((state: IState) => state?.ui);
   const [isImageLoaded, setIsImageLoaded] = useState('');
+  const [rtrReady, setRTRReady] = useState(false);
 
   useEffect(() => {
     if (luxService && avoidRTR && name) {
@@ -45,6 +46,10 @@ export function Model() {
         rtrService.selectComponent(componentToToken);
       }
     }
+    if (!avoidRTR) {
+      //TODO avoid timeout
+      setTimeout(() => setRTRReady(true), 5000);
+    }
   },
   [token, avoidRTR, modelAssetsPreloaded, camera, loaded]);
 
@@ -57,19 +62,23 @@ export function Model() {
       <div
         id='viewer'
         className={imgClasses}>
-          {avoidRTR &&
-            <div className='fc-image-wrapper'>
-              {
-                <img
-                  className={`${isImageLoaded ? '' : 'fc-skeleton'}`}
-                  src={isImageLoaded ? isImageLoaded : skeletonImgPath}
-                  alt='product skeleton'
-                  fetchPriority='high'
-                />
-              }
-            </div>
-          }
       </div>
+      {!rtrReady &&
+        <div
+        id='viewer2'
+        className='fc-lcp'>
+          <div className='fc-image-wrapper'>
+            {
+              <img
+                className={`${isImageLoaded ? '' : 'fc-skeleton'}`}
+                src={isImageLoaded ? isImageLoaded : skeletonImgPath}
+                alt='product skeleton'
+                fetchPriority='high'
+              />
+            }
+          </div>
+        </div>
+      }
     </section>
   );
 };
