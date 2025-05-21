@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IMenu, IMenuCA } from '../interfaces';
+import { IMenuCA } from '../interfaces';
 
 export const menu = createSlice({
   name: 'menu',

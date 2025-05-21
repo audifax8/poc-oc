@@ -18,7 +18,7 @@ export interface ISwatchPropTypes {
 export const Swatch = memo(function (props: ISwatchPropTypes) {
   const dispatch = useDispatch();
   const { luxService } = useLuxAPI();
-  const { av, caAlias, selectedAvId, index } = props;
+  const { av, caAlias, selectedAvId } = props;
 
   const imgClasses =
     `fc-swatch-wrapper--img ${av.id === selectedAvId ?

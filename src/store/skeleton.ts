@@ -38,6 +38,6 @@ export const skeleton = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { } = skeleton.actions;
+// export const { } = skeleton.actions;
 
 export default skeleton.reducer;
