@@ -38,6 +38,7 @@ export class RBNService implements ILuxBase {
       if (el) {
         return el;
       }
+      return undefined;
     });
     if (!skipServices) {
       const selectedLensesSku = this.coreService.getAttributeByAlias('lenses_sku').values.filter((value: any) => value.selected)[0];
@@ -48,6 +49,7 @@ export class RBNService implements ILuxBase {
             const order = data.key.match(/[0-9]/);
             services[order[0]] = data.value;
           }
+          return undefined;
         });
         services.map(service => tokenArray.push(service));
       }
@@ -141,25 +143,26 @@ export class RBNService implements ILuxBase {
         const { alias } = ca;
         try {
           const configurableAttibute = this.coreService.getAttributeByAlias(alias);
+          if (!configurableAttibute) {
+            return undefined;
+          }
           const { avs, currentPage, avsLenght} =
             this.getPaginatedAVsToRenderByCA(alias, ITEMS_BY_PAGE);
           
           const av = this.coreService.getSelectedAV(alias);
-          if (configurableAttibute) {
-            return {
-              caName: configurableAttibute.name,
-              alias: configurableAttibute.alias,
-              id: configurableAttibute.id,
-              avs,
-              selectedAvId: av.id,
-              selectedAvName: av.name,
-              avsLenght,
-              open: false,
-              currentPage,
-              skeleton: false,
-              icon: ca.icon
-            };
-          }
+          return {
+            caName: configurableAttibute.name,
+            alias: configurableAttibute.alias,
+            id: configurableAttibute.id,
+            avs,
+            selectedAvId: av.id,
+            selectedAvName: av.name,
+            avsLenght,
+            open: false,
+            currentPage,
+            skeleton: false,
+            icon: ca.icon
+          };
         } catch (e) {
           return undefined;
         }
