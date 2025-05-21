@@ -15,8 +15,10 @@ export function VMProvider(props: IProviderProps) {
   const { children } = props;
   const [vmService, setVmService] = useState<IVMMVService>();
   const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
+  const { mainScriptsLoaded } = useSelector((state: IState) => state?.ui);
 
   useEffect(() => {
+    if (!mainScriptsLoaded) { return; }
     if (avoidLuxAPI !== undefined) {
       if (avoidLuxAPI === true && fluidEnv) {
         console.log(`VM: Not loaded by param avoidLuxAPI`);
@@ -73,7 +75,7 @@ export function VMProvider(props: IProviderProps) {
       dispatch(setPatch(newState));
     });
     document.body.appendChild(scriptTag);
-  },[avoidLuxAPI]);
+  },[mainScriptsLoaded]);
   
   const value = { vmService, setVmService };
   return (

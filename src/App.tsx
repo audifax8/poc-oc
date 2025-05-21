@@ -1,7 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import { PreloadScripts } from './hooks/preload';
+import { PreloadMainScripts } from './hooks/preload-main-scripts';
+import { PreloadSecondaryScripts } from './hooks/preload-secondary-scripts';
 import { LuxAPIProvider } from './providers/lux-api';
 import { RTRProvider } from './providers/rtr';
 import { VMProvider } from './providers/vm';
@@ -15,7 +16,8 @@ function App() {
   return (
     <div className='fc-app'>
       <Provider store={store}>
-        <PreloadScripts></PreloadScripts>
+        <PreloadMainScripts></PreloadMainScripts>
+        <PreloadSecondaryScripts></PreloadSecondaryScripts>
           <RTRProvider>
             <LuxAPIProvider>
               <RXCProvider>

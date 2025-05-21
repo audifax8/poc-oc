@@ -12,7 +12,8 @@ export const uiSlice = createSlice({
     isMobile: isMobile,
     darkMode: false,
     menuOpen: false,
-    token: null
+    token: null,
+    mainScriptsLoaded: false
   },
   reducers: {
     setIsMobile: (state, action) => {
@@ -26,11 +27,14 @@ export const uiSlice = createSlice({
     },
     updateToken: (state, action) => {
       state.token = action.payload;
+    },
+    setMainScripsLoaded: (state, action) => {
+      state.mainScriptsLoaded = action.payload;
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setIsMobile, setDarkMode, setMenuOpen, updateToken } = uiSlice.actions;
+export const { setIsMobile, setDarkMode, setMenuOpen, updateToken, setMainScripsLoaded } = uiSlice.actions;
 
 export default uiSlice.reducer;

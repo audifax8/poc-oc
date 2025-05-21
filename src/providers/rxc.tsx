@@ -15,8 +15,10 @@ export function RXCProvider(props: IProviderProps) {
   const { children } = props;
   const [rxcService, setRxcService] = useState<IRXCService>();
   const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
+  const { mainScriptsLoaded } = useSelector((state: IState) => state?.ui);
 
   useEffect(() => {
+    if (!mainScriptsLoaded) { return; }
     if (avoidLuxAPI !== undefined) {
       if (avoidLuxAPI === true && fluidEnv) {
         console.log(`RXC: Not loaded by param avoidLuxAPI`);
@@ -72,7 +74,7 @@ export function RXCProvider(props: IProviderProps) {
       dispatch(setPatch(newState));
     });
     document.body.appendChild(scriptTag);
-  },[avoidLuxAPI]);
+  },[mainScriptsLoaded]);
   
   const value = { rxcService };
   return (

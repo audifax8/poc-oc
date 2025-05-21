@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setProduct } from '../store/product';
 import { setModelAssetsPreloaded } from '../store/rtr';
-import { updateToken } from '../store/ui';
+import { updateToken, setMainScripsLoaded } from '../store/ui';
 import { setLoaded } from '../store/core';
 import { setCas } from '../store/menu';
 import { setParams } from '../store/params';
@@ -137,6 +137,7 @@ export function LuxAPIProvider(props: IProviderProps) {
               dispatch(setModelAssetsPreloaded(true));
             }
             setRTRAssets(rtrAssets);
+            dispatch(setMainScripsLoaded(true));
           }
         );
       }

@@ -61,6 +61,7 @@ export interface IUI {
   darkMode: boolean;
   menuOpen: boolean;
   token: string;
+  mainScriptsLoaded: boolean;
 };
 
 export interface IMenuCA {
