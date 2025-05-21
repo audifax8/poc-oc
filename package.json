@@ -7,6 +7,7 @@
     "@cfg.plat/configuration-engine": "2.20.0",
     "@cfg.plat/configuration-loader": "^11.1.0",
     "@cfg.plat/configure-core": "5.12.3",
+    "@cfg.plat/fluid-product-urls": "^2.12.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
