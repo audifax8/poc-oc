@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/audifax8/poc-oc/static/css/main.1523d666.css",
+    "main.js": "/audifax8/poc-oc/static/js/main.0c0c2ca3.js",
+    "static/js/453.3272d406.chunk.js": "/audifax8/poc-oc/static/js/453.3272d406.chunk.js",
+    "static/media/Oswald-Medium.woff2": "/audifax8/poc-oc/static/media/Oswald-Medium.5619d871b0b0db69937a.woff2",
+    "static/media/Oswald-Medium.woff": "/audifax8/poc-oc/static/media/Oswald-Medium.339979ff7e5f4ac7c60c.woff",
+    "static/media/Lato-Italic.woff": "/audifax8/poc-oc/static/media/Lato-Italic.da75474a62209b97a9b1.woff",
+    "static/media/Lato-Regular.woff": "/audifax8/poc-oc/static/media/Lato-Regular.7b583cf2eb0c95d98f3f.woff",
+    "static/media/Lato-Bold.woff": "/audifax8/poc-oc/static/media/Lato-Bold.ffb5ff13cf83dd2d05ca.woff",
+    "static/media/Lato-Italic.woff2": "/audifax8/poc-oc/static/media/Lato-Italic.cc36382d147a62c802c9.woff2",
+    "static/media/Lato-Regular.woff2": "/audifax8/poc-oc/static/media/Lato-Regular.0426e6e29cad22fed4d4.woff2",
+    "static/media/Lato-Bold.woff2": "/audifax8/poc-oc/static/media/Lato-Bold.efbc3dd97b3081adcfec.woff2",
+    "static/media/light-backgroung-mobilew.webp": "/audifax8/poc-oc/static/media/light-backgroung-mobilew.c5dc6ee227bd288bff52.webp",
+    "static/media/light-backgroung-desktopw.webp": "/audifax8/poc-oc/static/media/light-backgroung-desktopw.c07ec6855be0cc393a38.webp",
+    "index.html": "/audifax8/poc-oc/index.html",
+    "main.1523d666.css.map": "/audifax8/poc-oc/static/css/main.1523d666.css.map",
+    "main.0c0c2ca3.js.map": "/audifax8/poc-oc/static/js/main.0c0c2ca3.js.map",
+    "453.3272d406.chunk.js.map": "/audifax8/poc-oc/static/js/453.3272d406.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1523d666.css",
+    "static/js/main.0c0c2ca3.js"
+  ]
+}
