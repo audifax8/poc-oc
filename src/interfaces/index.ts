@@ -30,6 +30,8 @@ export interface IParams {
   fluidEnv: boolean;
   mockPreloadAssets: boolean;
   showBackgroundImg: boolean;
+  rtrTimeOut: number;
+  rtrLoader: boolean;
 };
 export interface ICore {
   loaded: boolean;

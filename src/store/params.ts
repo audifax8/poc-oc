@@ -14,7 +14,9 @@ const {
   avoidRTR,
   mockPreloadAssets,
   fluidEnv,
-  showBackgroundImg
+  showBackgroundImg,
+  rtrLoader,
+  rtrTimeOut,
 } = queryParams;
 
 const parseBoolParam = (paramToParse: string | undefined) => {
@@ -50,7 +52,9 @@ export const paramsSlice = createSlice({
       avoidLuxAPI: parseBoolParam(avoidLuxAPI),
       avoidRTR: parseBoolParam(avoidRTR),
       mockPreloadAssets: parseBoolParam(mockPreloadAssets),
-      showBackgroundImg: parseBoolParam(showBackgroundImg)
+      showBackgroundImg: parseBoolParam(showBackgroundImg),
+      rtrLoader: parseBoolParam(rtrLoader !== undefined ? rtrLoader : 'true'),
+      rtrTimeOut: rtrTimeOut !== undefined ? parseInt(rtrTimeOut) : 8000 //8 seconds
     }
   },
   reducers: {

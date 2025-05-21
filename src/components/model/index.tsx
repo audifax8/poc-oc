@@ -15,7 +15,7 @@ export function Model() {
   const { rtrService } = useRTR();
   const { luxService } = useLuxAPI();
   const { loaded, on, modelAssetsPreloaded, camera } = useSelector((state: IState) => state?.rtr);
-  const { params: { avoidRTR, fluidEnv } } = useSelector((state: IState) => state?.fc);
+  const { params: { avoidRTR, fluidEnv, rtrTimeOut, rtrLoader } } = useSelector((state: IState) => state?.fc);
   const { name } = useSelector((state: IState) => state?.product);
   const { token } = useSelector((state: IState) => state?.ui);
   const [isImageLoaded, setIsImageLoaded] = useState('');
@@ -35,6 +35,7 @@ export function Model() {
     if (rtrService && loaded && modelAssetsPreloaded && !on && !avoidRTR) {
       rtrService.init(token);
       dispatch(setOn(true));
+      if (!rtrLoader) { setRTRReady(true); }
     }
     if (rtrService && loaded && modelAssetsPreloaded && on && !avoidRTR) {
       const isValidToken = rtrService.isIdAvailable(token);
@@ -47,14 +48,15 @@ export function Model() {
       }
     }
     if (!avoidRTR) {
-      //TODO avoid timeout
-      setTimeout(() => setRTRReady(true), 8000);
+      if (rtrLoader) {
+        //TODO avoid timeout
+        setTimeout(() => setRTRReady(true), rtrTimeOut);
+      }
     }
   },
   [token, avoidRTR, modelAssetsPreloaded, camera, loaded]);
 
   const imgClasses = `fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`;
-
   const skeletonImgPath = `/img/${isMobile ? 'mobilev2w' : 'desktopv2w'}.webp`;
 
   return (
