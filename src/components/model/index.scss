@@ -1,3 +1,5 @@
+@import '../../styles/config.scss';
+
 .fc-model {
   height: 78vh;
   position: relative;
@@ -14,6 +16,7 @@
   }
 
   & .fc-lcp {
+    background-color: $grey-f6;
     position: absolute;
     left: 0;
     top: 0;

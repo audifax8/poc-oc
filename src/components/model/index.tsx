@@ -48,7 +48,7 @@ export function Model() {
     }
     if (!avoidRTR) {
       //TODO avoid timeout
-      setTimeout(() => setRTRReady(true), 5000);
+      setTimeout(() => setRTRReady(true), 8000);
     }
   },
   [token, avoidRTR, modelAssetsPreloaded, camera, loaded]);
