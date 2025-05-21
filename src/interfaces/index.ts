@@ -64,15 +64,21 @@ export interface IUI {
 export interface IMenuCA {
   id: number;
   alias: string;
+  caName: string;
   icon: string;
-  ca?: IConfigurableAttribute | null;
   selectedAvId: number | null;
   selectedAvName: string;
-  avsToRender: IAttributeValue[];
+  avs: IAttributeValue[];
   open: boolean;
   avsLenght: number;
   currentPage: number;
   skeleton?: boolean;
+};
+
+export interface IMenuPagination {
+  avs: IAttributeValue[];
+  currentPage: number;
+  avsLenght: number;
 };
 export interface IMenu {
   cas: IMenuCA[];

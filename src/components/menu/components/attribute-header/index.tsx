@@ -72,7 +72,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
             }
             </div>
             <div className={caClasses}>
-              {!skeleton && <span>{menuCa?.ca?.name}</span>}
+              {!skeleton && <span>{menuCa?.caName}</span>}
             </div>
             <div className={avClasses}>
               {!skeleton && <span>{menuCa?.selectedAvName}</span>}
@@ -113,16 +113,16 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
           className='fc-attribute-values'
           aria-label='attribute values menu'
         >
-          {menuCa?.avsToRender && menuCa?.avsToRender.length && (
-            menuCa?.avsToRender.map(
+          {menuCa?.avs && menuCa?.avs?.length && (
+            menuCa?.avs.map(
               (av, index) => 
                 <li key={av.id || index}>
-                  <Swatch av={av} caAlias={menuCa?.ca?.alias} selectedAvId={menuCa?.selectedAvId} index={index}/>
+                  <Swatch av={av} caAlias={menuCa?.alias} selectedAvId={menuCa?.selectedAvId} index={index}/>
                 </li>
             )
           )}
           {menuCa?.currentPage < menuCa?.avsLenght &&
-            <li key={menuCa?.avsToRender.length}>
+            <li key={menuCa?.avs?.length}>
               <ViewMore
                 remainingItems={menuCa?.avsLenght - menuCa?.currentPage}
                 label='view more'

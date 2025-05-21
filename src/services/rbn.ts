@@ -3,14 +3,15 @@ import {
   ICAMap,
   ILuxBase,
   IAttributeValue,
-  IAVFacet,
   ICAFacet,
   IConfigurableAttribute,
   IFacetFacetValueMap,
-  IMenuCA
+  IMenuCA,
+  IMenuPagination
 } from '../interfaces';
 
 import { TOKEN_ALIASES, casToMap } from '../constants/rbn';
+const ITEMS_BY_PAGE = 5;
 
 export class RBNService implements ILuxBase {
   coreService: ICoreService;
@@ -104,34 +105,59 @@ export class RBNService implements ILuxBase {
     return baseURL;
   };
 
+  getAVsToRenderByCA(caAlias: string): IAttributeValue[] {
+    try {
+      const configurableAttibute = this.coreService.getAttributeByAlias(caAlias);
+      return configurableAttibute.values
+        .filter(av => av.selectable && av.active && av.name !== 'Blank');
+    } catch (e) {
+      return [];
+    }
+  };
+
+  getPaginatedAVsToRenderByCA(caAlias: string, limit: number): IMenuPagination {
+    try {
+      const selectableAVs = this.getAVsToRenderByCA(caAlias);
+      const avsLenght = selectableAVs.length;
+      const currentPage = avsLenght > limit ? limit : avsLenght;
+      const limitedAVs = selectableAVs.slice(0, currentPage);
+      return {
+        avs: limitedAVs,
+        currentPage,
+        avsLenght
+      };
+    } catch (e) {
+      return {
+        avs: [],
+        currentPage: 0,
+        avsLenght: 0
+      };
+    }
+  };
+
   mapCas(): IMenuCA[] {
     const mappedCAs = casToMap.map(
       (ca: ICAMap) => {
         const { alias } = ca;
         try {
           const configurableAttibute = this.coreService.getAttributeByAlias(alias);
-          const selectableAVs =
-            configurableAttibute
-              .values
-              .filter(av => av.selectable && av.active && av.name !== 'Blank');
-
-          const avsLenght = selectableAVs.length;
-          const currentPage = avsLenght > 5 ? 5 : avsLenght;
-          const avsToRender = selectableAVs.slice(0, currentPage);
+          const { avs, currentPage, avsLenght} =
+            this.getPaginatedAVsToRenderByCA(alias, ITEMS_BY_PAGE);
           
           const av = this.coreService.getSelectedAV(alias);
           if (configurableAttibute) {
             return {
-              ...ca,
-              ca: configurableAttibute,
+              caName: configurableAttibute.name,
+              alias: configurableAttibute.alias,
               id: configurableAttibute.id,
+              avs,
               selectedAvId: av.id,
               selectedAvName: av.name,
               avsLenght,
               open: false,
               currentPage,
               skeleton: false,
-              avsToRender
+              icon: ca.icon
             };
           }
         } catch (e) {
@@ -143,31 +169,23 @@ export class RBNService implements ILuxBase {
     return sanitizedCas;
   };
 
-  reloadPagination(caAlias: string, currentPage: number, open: boolean): IMenuCA {
-    const ITEMS_BY_PAGE = 5;
-    const newPage = currentPage + ITEMS_BY_PAGE;
-    
-    const configurableAttibute = this.coreService.getAttributeByAlias(caAlias);
-    const selectableAVs =
-      configurableAttibute
-        .values
-        .filter(av => av.selectable && av.active && av.name !== 'Blank');
+  reloadPagination(alias: string, page: number, open: boolean): IMenuCA {
+    const newPage = page + ITEMS_BY_PAGE;
 
-    const avsLenght = selectableAVs.length;
-    const updatedPage = newPage > avsLenght ? avsLenght : newPage;
-    const avsToRender = selectableAVs.slice(0, updatedPage);
-    
-    const av = this.coreService.getSelectedAV(caAlias);
+    const configurableAttibute = this.coreService.getAttributeByAlias(alias);
+    const { avs, currentPage, avsLenght} = this.getPaginatedAVsToRenderByCA(alias, newPage);    
+    const av = this.coreService.getSelectedAV(alias);
     return {
-      ca: configurableAttibute,
       id: configurableAttibute.id,
+      alias: configurableAttibute.alias,
+      caName: configurableAttibute.name,
       selectedAvId: av.id,
       selectedAvName: av.name,
       avsLenght,
       open,
-      currentPage: updatedPage,
+      currentPage,
       skeleton: false,
-      avsToRender
+      avs
     } as IMenuCA;      
   };
 
