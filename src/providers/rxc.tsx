@@ -37,32 +37,34 @@ export function RXCProvider(props: IProviderProps) {
     scriptTag.src = '//rxc.luxottica.com/rxc3/fe/test/v1.1.4/dist/rxc.js';
     scriptTag.async = true;
     scriptTag.addEventListener('load', (e) => {
-      if (!window.RXC_LOADED) {
+      setTimeout(() => {
+        if (!window.RXC_LOADED) {
+          if (fluidEnv) {
+            console.log(`RXC: Error loading script`);
+          }
+          const newState = {
+            loading: false,
+            failed: true,
+            loaded: false,
+            enabled: false
+          };
+          dispatch(setPatch(newState));
+          return;
+        }
         if (fluidEnv) {
-          console.log(`RXC: Error loading script`);
+          console.log(`RXC: script loaded`);
         }
         const newState = {
           loading: false,
-          failed: true,
-          loaded: false,
-          enabled: false
+          failed: false,
+          loaded: true,
+          enabled: true
         };
+        const _rxcService = new RXCService(window.RXC);
+        setRxcService(_rxcService);
         dispatch(setPatch(newState));
         return;
-      }
-      if (fluidEnv) {
-        console.log(`RXC: script loaded`);
-      }
-      const newState = {
-        loading: false,
-        failed: false,
-        loaded: true,
-        enabled: true
-      };
-      const _rxcService = new RXCService(window.RXC);
-      setRxcService(_rxcService);
-      dispatch(setPatch(newState));
-      return;
+      }, 2000);
     });
     scriptTag.addEventListener('error', (e: any) => {
       if (fluidEnv) {
