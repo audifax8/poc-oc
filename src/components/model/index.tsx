@@ -58,7 +58,7 @@ export function Model() {
 
   const imgClasses = `fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`;
   const lcpClasses = `fc-lcp ${showBackgroundImg ? '' : 'fc-lcp-backgroung'}`;
-  const skeletonImgPath = `/img/${isMobile ? 'mobilev2w' : 'desktopv2w'}.webp`;
+  const skeletonImgPath = `/img/sk.webp`;
 
   return (
     <section className='fc-model'>
@@ -73,7 +73,7 @@ export function Model() {
           <div className='fc-image-wrapper'>
             {
               <img
-                className={`${isImageLoaded ? '' : 'fc-skeleton'}`}
+                className=''
                 src={isImageLoaded ? isImageLoaded : skeletonImgPath}
                 alt='product skeleton'
                 fetchPriority='high'
@@ -85,3 +85,4 @@ export function Model() {
     </section>
   );
 };
+//className={`${isImageLoaded ? '' : 'fc-skeleton'}`}

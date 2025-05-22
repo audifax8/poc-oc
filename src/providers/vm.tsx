@@ -20,8 +20,10 @@ export function VMProvider(props: IProviderProps) {
   useEffect(() => {
     if (!mainScriptsLoaded) { return; }
     if (avoidLuxAPI !== undefined) {
-      if (avoidLuxAPI === true && fluidEnv) {
-        console.log(`VM: Not loaded by param avoidLuxAPI`);
+      if (avoidLuxAPI === true) {
+        if (fluidEnv) {
+          console.log(`VM: Not loaded by param avoidLuxAPI`);
+        }
         dispatch(setPatch({
           loaded: false,
           loading: false,

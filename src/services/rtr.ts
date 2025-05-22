@@ -19,6 +19,10 @@ export class RTRService implements IRTRService {
     return this.api.getVersion();
   };
 
+  async isInitialized(): Promise<boolean> {
+    return await this.api.isInitialized();
+  };
+
   async isIdAvailable(token: string): Promise<any> {
     const dataToCheck = {
       type: 'token',
@@ -46,7 +50,7 @@ export class RTRService implements IRTRService {
     });
   };
 
-  init(token: string): void {
+  init(token: string, cb?: Function): any {
     const initData = {
       data: {
         settings: {
@@ -90,6 +94,32 @@ export class RTRService implements IRTRService {
       }
     };
     this.api.init(initData);
+    const waitForScriptToLoad = (checkTimeMs: number, timeOutMs: number) => {
+      let elapsedTime = 0;
+      let isInitialized = false;
+      return new Promise(async (resolve, reject) => {
+        const time = setInterval(async () => {
+          elapsedTime += checkTimeMs;
+          isInitialized = await this.isInitialized();
+          if (isInitialized) {
+            resolve({
+              time: (elapsedTime / 1000).toFixed(2) + 's'
+            });
+            clearInterval(time);
+          } else if (elapsedTime > timeOutMs && !isInitialized) {
+            reject({
+              time: elapsedTime
+            });
+            clearInterval(time);
+          }
+        }, checkTimeMs);
+      });
+    };
+    if (cb) {
+      return waitForScriptToLoad(100, 20000)
+        .then((e) => cb(null, e))
+        .catch((err) => cb(err, null));
+    }
   };
 
   selectComponent(componentId: number): void {

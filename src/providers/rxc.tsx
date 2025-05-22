@@ -20,8 +20,10 @@ export function RXCProvider(props: IProviderProps) {
   useEffect(() => {
     if (!mainScriptsLoaded) { return; }
     if (avoidLuxAPI !== undefined) {
-      if (avoidLuxAPI === true && fluidEnv) {
-        console.log(`RXC: Not loaded by param avoidLuxAPI`);
+      if (avoidLuxAPI === true) {
+        if (fluidEnv) {
+          console.log(`RXC: Not loaded by param avoidLuxAPI`);
+        }
         dispatch(setPatch({
           loaded: false,
           loading: false,
@@ -34,7 +36,7 @@ export function RXCProvider(props: IProviderProps) {
     const scriptTag = document.createElement('script');
     scriptTag.src = '//rxc.luxottica.com/rxc3/fe/test/v1.1.4/dist/rxc.js';
     scriptTag.async = true;
-    scriptTag.addEventListener('load', () => {
+    scriptTag.addEventListener('load', (e) => {
       if (!window.RXC_LOADED) {
         if (fluidEnv) {
           console.log(`RXC: Error loading script`);
@@ -45,8 +47,6 @@ export function RXCProvider(props: IProviderProps) {
           loaded: false,
           enabled: false
         };
-        const _rxcService = new RXCService(window.RXC);
-        setRxcService(_rxcService);
         dispatch(setPatch(newState));
         return;
       }
@@ -59,6 +59,8 @@ export function RXCProvider(props: IProviderProps) {
         loaded: true,
         enabled: true
       };
+      const _rxcService = new RXCService(window.RXC);
+      setRxcService(_rxcService);
       dispatch(setPatch(newState));
       return;
     });

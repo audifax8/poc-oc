@@ -32,6 +32,25 @@
     }
   }
 
+  & .fc-footer--rxc {
+    margin-left: 21px; 
+  }
+
+  & .fc-button {
+    display: flex;
+    height: 32px;
+    padding: 0px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 48px;
+    background: $black-1f;
+
+    &--label {
+      font-family: $font-oswald-medium;
+    }
+  }
+
   @media (max-width: 700px) {
     padding: 10px 0;
     height: 10vh;
@@ -47,22 +66,6 @@
 
     & .fc-footer-price-info {
       justify-content: space-between;
-    }
-
-    & .fc-footer--rxc {
-      margin-left: 21px;
-
-      & .fc-button {
-        display: flex;
-        height: 32px;
-        padding: 0px 16px;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        border-radius: 48px;
-        background: $black-1f;
-        font-family: $font-lato;
-      }
     }
   }
 

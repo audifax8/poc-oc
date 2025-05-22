@@ -5,11 +5,11 @@ import { IState } from '../interfaces';
 
 export const PreloadSecondaryScripts = () => {
   const { params } = useSelector((state: IState) => state?.fc);
+  const { avoidLuxAPI, fluidEnv } = params;
   //const { mainScriptsLoaded } = useSelector((state: IState) => state?.ui);
 
   useEffect(() => {
     //if (!mainScriptsLoaded) { return; }
-    const { avoidLuxAPI, fluidEnv } = params;
     if (!avoidLuxAPI) {
       if (fluidEnv) {
         console.log('Adding preconnect for VM & RXC APIs');
@@ -34,7 +34,7 @@ export const PreloadSecondaryScripts = () => {
     }
     
   //},[mainScriptsLoaded]);
-  },[]);
+  },[avoidLuxAPI]);
 
   return <></>
 };

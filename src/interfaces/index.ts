@@ -190,7 +190,7 @@ export interface ILuxBase {
 
 export interface IRTRService {
   getVersion(): string;
-  init(token: string): void;
+  init(token: string, cb?: Function): any;
   isIdAvailable(token: string): any;
   setId(token: string): void;
   selectComponent(token: number): void;

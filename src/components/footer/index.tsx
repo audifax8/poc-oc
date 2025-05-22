@@ -11,15 +11,17 @@ import { IState } from '../../interfaces';
 export function Footer() {
   const dispatch = useDispatch();
   const { luxService } = useLuxAPI();
+  const { rxcService } = useRXC();
   const coreLoaded = useSelector((state: IState) => state?.core?.loaded);
   const { menuOpen } = useSelector((state: IState) => state?.ui);
   const { loaded, enabled, loading, failed } = useSelector((state: IState) => state?.rxc);
-  //TODO
-  //console.log({loading, loaded});
-  const { rxcService } = useRXC();
   const onRXCClick = async () => {
     if (loaded && enabled) {
-      await rxcService.renderRxc();
+      try {
+        await rxcService.renderRxc();
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
   const onMenuOpenClick = () => {
@@ -51,11 +53,12 @@ export function Footer() {
             />)
           }
         </div>
-        <div className='fc-footer--show-menu'>
+        <div className={`fc-footer--show-menu`}>
           <Button
             label={!menuOpen ? 'show menu' : 'close menu'}
             enabled={coreLoaded}
             onClickCallback= {onMenuOpenClick}
+            skeleton={!coreLoaded}
           />
         </div>
       </div>
