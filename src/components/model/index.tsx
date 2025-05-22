@@ -58,7 +58,7 @@ export function Model() {
 
   const imgClasses = `fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`;
   const lcpClasses = `fc-lcp ${showBackgroundImg ? '' : 'fc-lcp-backgroung'}`;
-  const skeletonImgPath = `/img/sk.webp`;
+  const skeletonImgPath = `./img/sk.webp`;
 
   return (
     <section className='fc-model'>
