@@ -45,6 +45,8 @@ export function RXCProvider(props: IProviderProps) {
           loaded: false,
           enabled: false
         };
+        const _rxcService = new RXCService(window.RXC);
+        setRxcService(_rxcService);
         dispatch(setPatch(newState));
         return;
       }

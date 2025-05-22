@@ -15,7 +15,7 @@ export function Model() {
   const { rtrService } = useRTR();
   const { luxService } = useLuxAPI();
   const { loaded, on, modelAssetsPreloaded, camera } = useSelector((state: IState) => state?.rtr);
-  const { params: { avoidRTR, fluidEnv, rtrTimeOut, rtrLoader } } = useSelector((state: IState) => state?.fc);
+  const { params: { avoidRTR, fluidEnv, rtrTimeOut, rtrLoader, showBackgroundImg } } = useSelector((state: IState) => state?.fc);
   const { name } = useSelector((state: IState) => state?.product);
   const { token } = useSelector((state: IState) => state?.ui);
   const [isImageLoaded, setIsImageLoaded] = useState('');
@@ -57,6 +57,7 @@ export function Model() {
   [token, avoidRTR, modelAssetsPreloaded, camera, loaded]);
 
   const imgClasses = `fc-rtr ${((loaded && name) && !avoidRTR) ? 'fc-rtr-on' : ''}`;
+  const lcpClasses = `fc-lcp ${showBackgroundImg ? '' : 'fc-lcp-backgroung'}`;
   const skeletonImgPath = `/img/${isMobile ? 'mobilev2w' : 'desktopv2w'}.webp`;
 
   return (
@@ -68,7 +69,7 @@ export function Model() {
       {!rtrReady &&
         <div
         id='viewer2'
-        className='fc-lcp'>
+        className={lcpClasses}>
           <div className='fc-image-wrapper'>
             {
               <img
