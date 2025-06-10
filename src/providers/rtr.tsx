@@ -17,13 +17,26 @@ export function RTRProvider(props: IProviderProps) {
   const { children } = props;
   const [rtrService, setRTRService] = useState<IRTRService>();
   const [rtrAssets, setRTRAssets] = useState<RTR_ASSETS>();
-  const { params: { avoidLuxAPI, fluidEnv } } = useSelector((state: IState) => state?.fc);
+  const { params: { avoidLuxAPI, fluidEnv, avoidRTR } } = useSelector((state: IState) => state?.fc);
 
   useEffect(() => {
     if (avoidLuxAPI !== undefined) {
       if (avoidLuxAPI === true) {
         if (fluidEnv) {
           console.log(`RTR: Not loaded by param avoidLuxAPI`);
+        }
+        dispatch(setPatch({
+          loaded: false,
+          loading: false,
+          failed: false,
+          enabled: false
+        }));
+        return;
+      }
+
+      if (avoidRTR === true) {
+        if (fluidEnv) {
+          console.log(`RTR: Not loaded by param avoidRTR`);
         }
         dispatch(setPatch({
           loaded: false,

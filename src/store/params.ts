@@ -17,6 +17,7 @@ const {
   showBackgroundImg,
   rtrLoader,
   rtrTimeOut,
+  timesDebug
 } = queryParams;
 
 const parseBoolParam = (paramToParse: string | undefined) => {
@@ -54,7 +55,8 @@ export const paramsSlice = createSlice({
       mockPreloadAssets: parseBoolParam(mockPreloadAssets),
       showBackgroundImg: parseBoolParam(showBackgroundImg),
       rtrLoader: parseBoolParam(rtrLoader !== undefined ? rtrLoader : 'true'),
-      rtrTimeOut: rtrTimeOut !== undefined ? parseInt(rtrTimeOut) : 8000 //8 seconds
+      rtrTimeOut: rtrTimeOut !== undefined ? parseInt(rtrTimeOut) : 8000, //8 seconds
+      timesDebug: parseBoolParam(timesDebug),
     }
   },
   reducers: {

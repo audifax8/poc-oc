@@ -49,7 +49,7 @@ export const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) 
     }
     dispatch(setMenuOpen({ open: !menuCa?.open, caAlias }));
     if (!avoidLuxAPI) {
-      rtrAssets.preloadAssets(caAlias);
+      rtrAssets?.preloadAssets(caAlias);
     }
   };
 

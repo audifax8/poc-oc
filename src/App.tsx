@@ -3,7 +3,11 @@ import { Provider } from 'react-redux';
 
 import { PreloadMainScripts } from './hooks/preload-main-scripts';
 import { PreloadSecondaryScripts } from './hooks/preload-secondary-scripts';
+
 import { LuxAPIProvider } from './providers/lux-api';
+import { LuxAPIWorkerProvider } from './providers/lux-api-web-worker';
+import { RTRWorkerProvider } from './providers/rtr-web-worker';
+import { RTRAssetsWorkerProvider } from './providers/rtr-assets-web-worker';
 import { RTRProvider } from './providers/rtr';
 import { VMProvider } from './providers/vm';
 import { RXCProvider } from './providers/rxc';
@@ -17,16 +21,13 @@ function App() {
     <div className='fc-app'>
       <Provider store={store}>
         <PreloadMainScripts></PreloadMainScripts>
-        <PreloadSecondaryScripts></PreloadSecondaryScripts>
+        <LuxAPIWorkerProvider>
           <RTRProvider>
-            <LuxAPIProvider>
-              <RXCProvider>
-                <VMProvider>
-                  <Wrapper />
-                </VMProvider>
-              </RXCProvider>
-            </LuxAPIProvider>
+            <RTRAssetsWorkerProvider>
+              <Wrapper />
+            </RTRAssetsWorkerProvider>
           </RTRProvider>
+        </LuxAPIWorkerProvider>
       </Provider>
     </div>
   );

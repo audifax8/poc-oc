@@ -32,6 +32,7 @@ export interface IParams {
   showBackgroundImg: boolean;
   rtrTimeOut: number;
   rtrLoader: boolean;
+  timesDebug: boolean;
 };
 export interface ICore {
   loaded: boolean;

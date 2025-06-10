@@ -22,5 +22,5 @@ export default configureStore({
     ui,
     skeleton,
     menu
-  },
+  }
 });

@@ -11,11 +11,11 @@ import { IState } from '../../interfaces';
 import './index.scss';
 
 export function Wrapper() {
-  const { darkMode, menuOpen } = useSelector((state: IState) => state?.ui);
-  const { showBackgroundImg } = useSelector((state: IState) => state?.fc?.params);
+  const { menuOpen } = useSelector((state: IState) => state?.ui);
 
-  const classes =
-    `fc-wrapper ${darkMode ? 'fc-dark-mode' : ''} ${menuOpen ? 'fc-menu-open': ''} ${showBackgroundImg ? 'fc-show-background' : ''}`;
+  /*const classes =
+    `fc-wrapper ${darkMode ? 'fc-dark-mode' : ''} ${menuOpen ? 'fc-menu-open': ''} ${showBackgroundImg ? 'fc-show-background' : ''}`;*/
+  const classes = `fc-wrapper ${menuOpen ? 'fc-menu-open': ''}`;
   return (
     <div className={classes}>
       <RBNHeader />

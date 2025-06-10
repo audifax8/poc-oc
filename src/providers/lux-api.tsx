@@ -125,7 +125,7 @@ export function LuxAPIProvider(props: IProviderProps) {
             const product = _cService.getProduct();
             dispatch(setLoaded(true));
             dispatch(setProduct(product));
-            dispatch(setParams(params));
+            //dispatch(setParams(params));
             dispatch(setCas(_rbnService.mapCas()));
             setLuxService(_rbnService);
             if (avoidLuxAPI) {

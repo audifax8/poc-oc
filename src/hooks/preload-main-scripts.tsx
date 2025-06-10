@@ -9,14 +9,14 @@ export const PreloadMainScripts = () => {
   const { vendorId, currency } = product;
 
   useEffect(() => {
-    preconnect('//cdn-prod.fluidconfigure.com');
-    preconnect('//prod.fluidconfigure.com');
-    const { workflow, product, customer, locale, avoidLuxAPI, fluidEnv } = params;
+    preconnect('https://cdn-prod.fluidconfigure.com');
+    preconnect('https://prod.fluidconfigure.com');
+    const { workflow, product, customer, locale, fluidEnv, avoidRTR } = params;
   
     const graphUrl =
-      `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
+      `https://cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/graph-settings-${locale}.json`;
     const preferencesUrl =
-      `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/preferences.json`;
+      `https://cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/preferences.json`;
     /*const uiSettings =
       `//cdn-prod.fluidconfigure.com/static/configs/3.13.0/prod/${workflow}/${customer}/product/${product}/ui-settings-${locale}.json`;*/
 
@@ -30,18 +30,20 @@ export const PreloadMainScripts = () => {
     );
     //preload(uiSettings, {as: 'fetch', crossOrigin: 'anonymous'});
 
-    if (fluidEnv && avoidLuxAPI) {
-      console.log('Avoid preloading RTR param');
+    if (avoidRTR) {
+      if (fluidEnv) {
+        console.log('Avoid preloading RTR by avoidRTR param');
+      }
     }
 
-    if (!avoidLuxAPI) {
+    if (!avoidRTR) {
       preload(
-        '//rtrmv.essilorluxottica.com/lib/v/3.0.3/main.umd.js',
+        'https://rtrmv.essilorluxottica.com/lib/v/3.0.3/main.umd.js',
         { as: 'script', crossOrigin: 'anonymous', fetchPriority: 'high' }
       );
     }
     if (vendorId && currency) {
-      preload(`//one-configurator-services-mockup.luxdeepblue.com/components?vendorId=${vendorId}&currency=${currency}`, {as: 'fetch', crossOrigin: 'anonymous'});
+      preload(`https://one-configurator-services-mockup.luxdeepblue.com/components?vendorId=${vendorId}&currency=${currency}`, {as: 'fetch', crossOrigin: 'anonymous'});
     }
     
   },[]);
